@@ -465,7 +465,7 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
     <div className="space-y-4">
       {/* Code Editor Header */}
       <div className="glass p-4 rounded-3xl border border-white/10">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-red-500/80" />
@@ -474,10 +474,10 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
             </div>
             <span className="text-xs font-mono text-neura-muted ml-2">{algoId}_model.py</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-end">
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1 px-3 py-1.5 glass rounded-xl text-xs text-neura-muted hover:text-white transition-all"
+              className="flex items-center gap-1 px-3 py-1.5 glass rounded-xl text-xs text-neura-muted hover:text-white transition-all shrink-0"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
               {copied ? "Tersalin" : "Salin Kode"}
@@ -485,7 +485,7 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
             <button
               onClick={handleRunCode}
               disabled={isRunning}
-              className="flex items-center gap-1.5 px-4 py-1.5 bg-neura-cyan text-neura-deep rounded-xl text-xs font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50 shadow-lg shadow-neura-cyan/20"
+              className="flex items-center gap-1.5 px-4 py-1.5 bg-neura-cyan text-neura-deep rounded-xl text-xs font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50 shadow-lg shadow-neura-cyan/20 shrink-0"
             >
               <Play className="w-3.5 h-3.5 fill-current" />
               {isRunning ? "Menjalankan..." : "Jalankan Kode"}

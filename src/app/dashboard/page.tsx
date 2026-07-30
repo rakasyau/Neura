@@ -175,10 +175,10 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Dashboard Tab Navigation */}
-        <div className="flex gap-2 p-1.5 glass rounded-2xl w-fit border border-white/15">
+        <div className="flex gap-2 p-1.5 glass rounded-2xl w-fit max-w-full overflow-x-auto no-scrollbar border border-white/15">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
               activeTab === "overview"
                 ? "bg-neura-cyan text-neura-deep shadow-lg shadow-neura-cyan/20"
                 : "text-neura-muted hover:text-white"
@@ -189,7 +189,7 @@ export default function DashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab("ai-chat")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
               activeTab === "ai-chat"
                 ? "bg-neura-cyan text-neura-deep shadow-lg shadow-neura-cyan/20"
                 : "text-neura-muted hover:text-white"
@@ -200,7 +200,7 @@ export default function DashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab("certificate")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
               activeTab === "certificate"
                 ? "bg-neura-cyan text-neura-deep shadow-lg shadow-neura-cyan/20"
                 : "text-neura-muted hover:text-white"

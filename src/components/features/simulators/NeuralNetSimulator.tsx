@@ -60,7 +60,7 @@ export function NeuralNetSimulator() {
           </div>
 
           {/* Canvas View */}
-          <div className="relative w-full h-[320px] bg-black/40 rounded-2xl border border-white/10 p-6 flex items-center justify-between overflow-hidden">
+          <div className="relative w-full h-[320px] bg-black/40 rounded-2xl border border-white/10 p-4 sm:p-6 flex items-center justify-between overflow-x-auto no-scrollbar">
             {/* Input Layer */}
             <div className="flex flex-col justify-around h-full z-10">
               <span className="text-[10px] uppercase tracking-wider text-neura-muted mb-2 text-center font-bold">Input Layer</span>

@@ -75,26 +75,26 @@ export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalPro
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="w-full max-w-3xl h-[85vh] glass-strong rounded-3xl border border-white/20 shadow-2xl flex flex-col overflow-hidden bg-neura-deep/95"
+          className="w-full max-w-3xl max-h-[92vh] sm:max-h-[85vh] h-full glass-strong rounded-3xl border border-white/20 shadow-2xl flex flex-col overflow-hidden bg-neura-deep/95"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-white/10">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-neura-cyan/20 text-neura-cyan flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-2xl bg-neura-cyan/20 text-neura-cyan flex items-center justify-center font-bold shrink-0">
                 <BookOpen className="w-5 h-5" />
               </div>
-              <div>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-neura-cyan">{lesson.moduleTitle}</span>
-                <h3 className="text-lg font-bold font-display text-white">{lesson.title}</h3>
+              <div className="min-w-0">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-neura-cyan block">{lesson.moduleTitle}</span>
+                <h3 className="text-base sm:text-lg font-bold font-display text-white truncate">{lesson.title}</h3>
               </div>
             </div>
-            <button onClick={onClose} className="p-2 glass rounded-xl text-neura-muted hover:text-white transition-all">
+            <button onClick={onClose} className="p-2 glass rounded-xl text-neura-muted hover:text-white transition-all shrink-0">
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Content Body */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6">
             <p className="text-sm text-neura-muted italic leading-relaxed border-l-2 border-neura-cyan pl-4 bg-white/5 py-2 rounded-r-xl">
               {lesson.summary}
             </p>
