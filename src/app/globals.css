@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  * {
+    @apply border-white/10;
+  }
+  body {
+    @apply bg-neura-deep text-neura-text font-body antialiased selection:bg-neura-cyan/30 selection:text-white;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-[#0D1424]/85 backdrop-blur-xl border border-white/15 shadow-2xl;
+  }
+  .glass-strong {
+    @apply bg-[#090E1A]/95 backdrop-blur-2xl border border-white/20 shadow-2xl;
+  }
+  .glass-card {
+    @apply bg-[#0F172A]/90 backdrop-blur-2xl border border-white/15 shadow-2xl;
+  }
+  .glass-hover {
+    @apply transition-all duration-300;
+  }
+  .glass-hover:hover {
+    @apply bg-[#152035]/95 border-neura-cyan/40 shadow-xl shadow-neura-cyan/10;
+  }
+  .glass-input {
+    @apply bg-[#090D18] backdrop-blur-xl border border-white/20 rounded-[16px]
+           text-white placeholder-slate-400
+           focus:outline-none focus:border-neura-cyan focus:ring-1 focus:ring-neura-cyan/50 focus:bg-[#0B1222]
+           transition-all duration-200;
+  }
+  .gradient-aurora {
+    background: linear-gradient(135deg, #050811 0%, #0D1424 50%, #050811 100%);
+  }
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-neura-cyan via-teal-300 to-neura-amber font-extrabold;
+  }
+  .pill-nav {
+    @apply fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between gap-2 px-3 py-2 
+           bg-[#090D18]/95 backdrop-blur-2xl border border-white/20 rounded-full shadow-2xl;
+  }
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .node-bg {
+    background-image: radial-gradient(circle at 25% 25%, rgba(94, 234, 212, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050811;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-white/20 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/40;
+}
