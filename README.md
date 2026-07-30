@@ -1,5 +1,6 @@
 # 🧠 Neura — Platform Edukasi & Playground Machine Learning Interaktif
 
+[![Website](https://img.shields.io/badge/Website-neura.rakasyau.my.id-00F2FE?style=for-the-badge)](https://neura.rakasyau.my.id)
 ![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js)
 ![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?style=for-the-badge&logo=typescript)
@@ -8,6 +9,8 @@
 ![Google Gemini](https://img.shields.io/badge/Google_Gemini-AI_Assistant-8E75B5?style=for-the-badge&logo=google)
 
 **Neura** adalah platform pembelajaran Machine Learning (ML) berbasis web yang dirancang untuk memberikan pengalaman belajar intuitif, visual, dan interaktif. Neura menggabungkan modul kurikulum terstruktur, simulator visual algoritma interaktif, lingkungan eksekusi kode Python simulated, dashboard IoT studi kasus, serta **Neura AI Assistant** untuk membantu memahami konsep-konsep AI secara mendalam.
+
+🌐 **Website Resmi / Live Demo**: [https://neura.rakasyau.my.id](https://neura.rakasyau.my.id)
 
 ---
 
@@ -56,6 +59,7 @@ Mode ganda untuk mengeksplorasi algoritma:
 - **Database & Auth**: [MongoDB Atlas](https://www.mongodb.com/atlas), [Mongoose](https://mongoosejs.com/), JWT (HTTP-Only Cookies), [Google OAuth 2.0](https://developers.google.com/identity)
 - **Charts & Graphs**: [Recharts](https://recharts.org/)
 - **AI Integration**: [Google Generative AI (Gemini API)](https://ai.google.dev/)
+- **Live Website**: [neura.rakasyau.my.id](https://neura.rakasyau.my.id)
 
 ---
 
@@ -85,6 +89,7 @@ Neura/
 ├── .env.example                # Template Environment Variables
 ├── .gitignore                  # Proteksi File Rahasia dari Git
 ├── package.json
+├── vercel.json                 # Konfigurasi Vercel Serverless Deployment
 └── README.md
 ```
 
