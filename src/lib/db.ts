@@ -1,11 +1,5 @@
 import mongoose from "mongoose"
 
-const MONGODB_URI = process.env.MONGODB_URI!
-
-if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI tidak ditemukan. Atur di .env.local atau environment variable.")
-}
-
 interface MongooseCache {
   conn: typeof mongoose | null
   promise: Promise<typeof mongoose> | null
@@ -23,6 +17,11 @@ if (!global.mongooseCache) {
 }
 
 export async function connectToDatabase() {
+  const MONGODB_URI = process.env.MONGODB_URI
+  if (!MONGODB_URI) {
+    throw new Error("MONGODB_URI tidak ditemukan. Atur di Vercel Environment Variables.")
+  }
+
   if (cached.conn) {
     return cached.conn
   }
