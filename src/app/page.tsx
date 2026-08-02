@@ -81,7 +81,7 @@ export default function HomePage() {
             className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto"
           >
             {[
-              { value: "6", label: "Modul Lengkap" },
+              { value: `${modules.length}`, label: "Modul Lengkap" },
               { value: "8", label: "Algoritma" },
               { value: "100%", label: "Gratis" },
             ].map((stat) => (
@@ -100,7 +100,7 @@ export default function HomePage() {
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-display mb-4">Jalur Belajar Terstruktur</h2>
             <p className="text-neura-muted max-w-xl mx-auto">
-              Dari nol hingga siap riset — 6 modul yang dirancang mengikuti kurikulum akademik ML.
+              Dari nol hingga siap riset — {modules.length} modul yang dirancang mengikuti kurikulum akademik ML.
             </p>
           </motion.div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
