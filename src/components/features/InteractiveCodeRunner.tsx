@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Play, Copy, Check, Terminal, Loader2, Sparkles, BarChart2 } from "lucide-react"
+import { Play, Copy, Check, Terminal, Loader2, BarChart2 } from "lucide-react"
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts"
 import { notify } from "@/components/ui/Toast"
 
@@ -33,7 +33,7 @@ function getPyRuntime(): Promise<CustomPyodide> {
           const s = document.createElement("script")
           s.src = `${PYODIDE_URL}pyodide.js`
           s.onload = () => resolve()
-          s.onerror = () => reject(new Error("Gagal memuat Pyodide — periksa jaringan & VPN"))
+          s.onerror = () => reject(new Error("Gagal memuat runtime — periksa jaringan & VPN"))
           document.head.appendChild(s)
         })
       }
@@ -114,14 +114,11 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
     setError(null)
     setChartData([])
     printBuffer.length = 0
-    setLogs(["[Neura PyRuntime] Memuat Pyodide (WebAssembly)... lambat di jalankan pertama kali"])
+    setLogs(["[Neura] Menyiapkan runtime Python..."])
 
     try {
       const py = await getPyRuntime()
-      setLogs([
-        `[Neura PyRuntime] Runtime siap. Mengeksekusi ${algoId} (sklearn/numpy) di browser...`,
-        "",
-      ])
+      setLogs([`[Neura] Menjalankan ${algoId}...`])
 
       await py.runPythonAsync(code)
       // ambil data chart dari hasil prediksi model yang baru saja dieksekusi
@@ -135,25 +132,21 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
       const output = printBuffer.length > 0 ? printBuffer : ["(tidak ada print/cetak pada kode)"]
 
       setLogs([
-        `[Neura PyRuntime] Runtime Python siap — menjalankan ${algoId}_model.py via WebAssembly.`,
-        "",
-        "════════════════════ EXECUTION OUTPUT ════════════════",
+        "════════════════════ OUTPUT ════════════════",
         ...output,
-        "──────────────────────────────────────────────────────",
-        "[Sukses] Kode dieksekusi (WebAssembly real). Output di atas hasil nyata dari kode yang kamu ubah.",
+        "────────────────────────────────────────────",
+        "[Sukses] Eksekusi selesai.",
       ])
       notify("Eksekusi Selesai!", `${algoLabel(algoId)} berhasil dijalankan (+50 XP)`, "achievement")
     } catch (e: any) {
       setError(String(e?.message || e))
       const output = printBuffer.length > 0 ? [...printBuffer, ""] : []
       setLogs([
-        `[Neura PyRuntime] Runtime siap — menjalankan ${algoId}_model.py via WebAssembly.`,
-        "",
-        "════════════════════ ERROR TRACEBACK ══════════════════",
+        "════════════════════ ERROR ══════════════════",
         ...output,
         String(e?.message || e),
         "",
-        "[Gagal] Kode tidak selesai. Cek kembali sintaks/data kode kamu.",
+        "[Gagal] Kode tidak selesai dijalankan.",
       ])
     } finally {
       setIsRunning(false)
@@ -198,10 +191,6 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
           spellCheck={false}
           className="w-full h-[280px] p-4 bg-black/60 rounded-2xl font-mono text-xs text-neura-cyan leading-relaxed focus:outline-none border border-white/10 resize-none"
         />
-        <p className="mt-2 text-[11px] text-neura-muted/70 flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-neura-amber" />
-          Kode dieksekusi sungguhan via Pyodide (WebAssembly) langsung di browser — ubah kodenya, output & grafik ikut berubah.
-        </p>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4">
@@ -248,7 +237,7 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
               <div className="h-full flex items-center justify-center text-xs text-neura-muted/40 italic px-4 text-center">
                 {error && !isRunning
                   ? "Kode error — perbaiki lalu jalankan ulang."
-                  : "Grafik real dari hasil prediksi model (variabel `model`) akan dirender di sini setelah kode dijalankan."}
+                  : "Grafik hasil prediksi akan tampil di sini setelah kode dijalankan."}
               </div>
             ) : (
               <ResponsiveContainer width="100%" height={320}>

@@ -53,8 +53,7 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-lg md:text-xl text-neura-muted max-w-2xl mx-auto mb-8"
           >
-            Dari fundamental, ragam algoritma, kode Python, hingga simulasi interaktif — semuanya
-            berjalan di browser tanpa instalasi.
+            Dari fundamental, ragam algoritma, kode Python, hingga simulasi interaktif — semuanya tanpa instalasi.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
