@@ -5,11 +5,35 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Network, Play, Sparkles, Sliders } from "lucide-react"
 import { notify } from "@/components/ui/Toast"
 
+const sigmoid = (z: number) => 1 / (1 + Math.exp(-z))
+const activate = (z: number, fn: string) =>
+  fn === "ReLU" ? Math.max(0, z) : fn === "Tanh" ? Math.tanh(z) : sigmoid(z)
+
+// Input tetap (3 fitur). Forward pass: h = act(W1·x + b1); out = sigmoid(W2·h + b2).
+const INPUT_VALUES = [1.0, 0.5, -0.3]
+
+function forwardPass(h: number, fn: string): number[] {
+  const w1: number[][] = Array.from({ length: h }, (_, j) =>
+    Array.from({ length: 3 }, (_, i) => Math.cos(j * 2.9 + i * 1.7) * 0.4)
+  )
+  const b1: number[] = Array.from({ length: h }, (_, j) => Math.sin(j * 1.3) * 0.3)
+  const hidden = w1.map((row, j) =>
+    activate(row.reduce((s, w, i) => s + w * INPUT_VALUES[i], 0) + b1[j], fn)
+  )
+  const out = [0, 1].map((a) => {
+    let z = a === 0 ? 0.1 : -0.1
+    for (let j = 0; j < h; j++) z += (a === 0 ? 1 : -1) * Math.sin(j + a + 2) * 1.0 * hidden[j]
+    return sigmoid(z)
+  })
+  return out
+}
+
 export function NeuralNetSimulator() {
   const [hiddenNodes, setHiddenNodes] = useState<number>(4)
   const [activation, setActivation] = useState<string>("ReLU")
   const [isFiring, setIsFiring] = useState<boolean>(false)
   const [outputVal, setOutputVal] = useState<number | null>(null)
+  const [winner, setWinner] = useState<number>(0)
 
   const fireNetwork = () => {
     if (isFiring) return
@@ -19,20 +43,15 @@ export function NeuralNetSimulator() {
 
     setTimeout(() => {
       setIsFiring(false)
-      // Output bergantung pada parameter arsitektur
-      // Lebih banyak neuron → confidence lebih tinggi (hingga batas tertentu)
-      const neuronBonus = Math.min(hiddenNodes * 0.04, 0.20)  // max +0.20 dari 6 neuron
-      // Fungsi aktivasi mempengaruhi range output
-      const activationBase: Record<string, number> = {
-        "ReLU": 0.72,     // Range: 0.72-0.92 → paling umum dan stabil
-        "Sigmoid": 0.65,  // Range: 0.65-0.85 → cenderung lebih rendah
-        "Tanh": 0.68,     // Range: 0.68-0.88 → menengah
-      }
-      const base = activationBase[activation] || 0.70
-      const noise = (Math.random() - 0.5) * 0.08  // ±0.04 variasi acak
-      const res = parseFloat(Math.min(0.98, Math.max(0.50, base + neuronBonus + noise)).toFixed(3))
-      setOutputVal(res)
-      notify("Prediksi Neural Net!", `Output: ${res} | ${hiddenNodes} neuron, ${activation}`, "achievement")
+      const out = forwardPass(hiddenNodes, activation)
+      const win = out[0] >= out[1] ? 0 : 1
+      setWinner(win)
+      setOutputVal(out[win])
+      notify(
+        "Prediksi Neural Net!",
+        `→ Kelas ${String.fromCharCode(65 + win)} (${(out[win] * 100).toFixed(1)}%) | ${hiddenNodes} neuron, ${activation}`,
+        "achievement"
+      )
     }, 1800)
   }
 
@@ -54,7 +73,7 @@ export function NeuralNetSimulator() {
             </div>
             {outputVal !== null && (
               <span className="px-3 py-1 glass rounded-xl text-xs font-bold text-neura-cyan border border-neura-cyan/40">
-                Confidence: {(outputVal * 100).toFixed(1)}%
+                Kelas {String.fromCharCode(65 + winner)}: {(outputVal * 100).toFixed(1)}%
               </span>
             )}
           </div>
@@ -98,7 +117,7 @@ export function NeuralNetSimulator() {
                   animate={isFiring ? { scale: [1, 1.3, 1] } : {}}
                   transition={{ duration: 0.5, delay: 1.2 + i * 0.2 }}
                   className={`w-11 h-11 rounded-full flex items-center justify-center text-xs font-bold border shadow-xl ${
-                    outputVal !== null && i === 0 ? "bg-neura-cyan text-neura-deep border-neura-cyan" : "bg-purple-500/20 text-purple-300 border-purple-400"
+                    outputVal !== null && winner === i ? "bg-neura-cyan text-neura-deep border-neura-cyan" : "bg-purple-500/20 text-purple-300 border-purple-400"
                   }`}
                 >
                   y{i + 1}
