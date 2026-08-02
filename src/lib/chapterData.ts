@@ -187,6 +187,7 @@ print("Cluster:", model.labels_)
       { type: "paragraph", text: "Reinforcement Learning (Pembelajaran Penguatan) adalah jenis ML di mana agen (agent) belajar membuat keputusan melalui interaksi langsung dengan lingkungan (environment). Agen melakukan aksi, menerima reward (hadiah) untuk aksi baik dan punishment (hukuman) untuk aksi buruk, lalu menyesuaikan strateginya untuk memaksimalkan total reward jangka panjang." },
       { type: "highlight", text: "🎮 Analogi mudah: Bayangkan melatih anjing. Saat anjing duduk sesuai perintah, Anda memberi camilan (reward). Saat anjing menggigit sandal, Anda berkata 'Tidak!' (punishment). Seiring waktu, anjing belajar perilaku mana yang menghasilkan camilan." },
       { type: "paragraph", text: "Contoh penerapan RL yang terkenal: AlphaGo (DeepMind) yang mengalahkan juara dunia Go, robot yang belajar berjalan, mobil otonom yang belajar mengemudi, dan chatbot yang belajar memberikan jawaban lebih baik." },
+      { type: "highlight", text: "⚖️ Dua kekuatan berlawanan: **exploration** (mencoba aksi baru yang belum pernah dicoba untuk menemukan reward potensial) vs **exploitation** (memilih aksi yang sudah terbukti memberi reward tertinggi). Keseimbangannya dikenal **exploration-exploitation tradeoff** — direka lebih memaksimal di zaman yg keputusan, seperti epsilon-greedy (sebagian kecil waktu memilih aksi acak, sisanya memilih aksi terbaik)." },
       { type: "quick_quiz", question: { q: "Dalam Reinforcement Learning, bagaimana agen belajar membuat keputusan?", opts: ["Dengan mempelajari data berlabel seperti Supervised Learning", "Dengan menemukan cluster dalam data seperti Unsupervised Learning", "Dengan trial-and-error, menerima reward untuk aksi baik dan punishment untuk aksi buruk", "Dengan menyalin persis strategi manusia"], correct: 2, exp: "Benar! RL belajar melalui trial-and-error: agen mencoba berbagai aksi, menerima feedback berupa reward/punishment, lalu menyesuaikan strategi untuk memaksimalkan reward kumulatif." } },
     ],
   },
@@ -291,6 +292,7 @@ print(f"Data uji: {len(X_test)} sampel")    # 30
 
 # Parameter stratify=y memastikan proporsi kelas
 # tetap seimbang di train dan test set` },
+      { type: "highlight", text: "🧪 Seberapa banyak data yang tak terlihat perlu kita sisihkan? Untuk tuning hyperparameter, kernel tidak selalu cukup train/test — gunakan **validation set** (hold-out): latih di train, pilih hyperparameter terbaik di validation, lalu ukur performa final sekali saja di test. Aturan penting anti-**data leakage**: sisihkan test set SEJAK awal dan jangan pernah menyentuhnya saat training. Skalakan/transform fitur hanya memakai statistik dari train set, lalu gunakan parameter yang sama untuk validation/test — jangan fit ulang di test agar hasil tidak tercemar." },
       { type: "quick_quiz", question: { q: "Mengapa kita perlu membagi data menjadi train dan test set?", opts: ["Agar model bisa belajar lebih cepat", "Untuk menghemat memori komputer", "Untuk menguji kemampuan model pada data yang belum pernah dilihat (generalisasi)", "Karena model ML tidak bisa memproses seluruh data sekaligus"], correct: 2, exp: "Benar! Test set digunakan untuk mengukur kemampuan generalisasi model — seberapa baik model memprediksi data baru yang belum pernah dilihat selama training." } },
     ],
   },
@@ -304,6 +306,9 @@ print(f"Data uji: {len(X_test)} sampel")    # 30
       { type: "paragraph", text: "Underfitting terjadi saat model terlalu sederhana untuk menangkap pola dalam data. Performanya buruk baik di training set maupun test set. Analoginya: siswa yang hanya membaca ringkasan 1 halaman untuk ujian 10 bab — ia tidak cukup belajar untuk menjawab soal apapun." },
       { type: "highlight", text: "⚖️ Tanda-tanda:\n• Overfitting: Akurasi training 99%, akurasi testing 65% (gap besar)\n• Underfitting: Akurasi training 55%, akurasi testing 52% (keduanya rendah)\n• Model Ideal: Akurasi training 92%, akurasi testing 89% (gap kecil, keduanya tinggi)" },
       { type: "highlight", text: "🛡️ Cara mencegah Overfitting:\n• Kumpulkan lebih banyak data training\n• Kurangi kompleksitas model (pruning, regularisasi)\n• Gunakan teknik dropout (Neural Network)\n• Terapkan cross-validation\n\n🔧 Cara mengatasi Underfitting:\n• Gunakan model yang lebih kompleks\n• Tambahkan fitur yang lebih informatif\n• Kurangi regularisasi\n• Latih model lebih lama (lebih banyak epoch)" },
+            { type: "paragraph", text: "Akarnya dapat dipahami lewat **bias–variance tradeoff**. Error sebuah model dapat dipecah menjadi dua sumber: **bias** (kesalahan sistematis karena model terlalu sederhana menebak pola) dan **variance** (fluktuasi model karena terlalu peka terhadap data training). Model sederhana → bias tinggi, variance rendah (underfit). Model terlalu kompleks → bias rendah, variance tinggi (overfit). Sasaran kita adalah titik keseimbangan di mana total error minimal. Regularisasi memindah keseimbangan ini — memaksa model menyederhanakan sedikit demi mengurangi variance dengan mengorbankan sedikit bias." },
+            { type: "formula", text: "MSE = \\text{Bias}^2 + \\text{Variance} + \\text{noise}" },
+        { type: "highlight", text: "🧾 Regularisasi L1 vs L2:\n• L2 (Ridge) — tambah penalti kuadrat bobot |w|², menyusutkan bobot mendekati nol tapi tidak persis nol\n• L1 (Lasso) — tambah penalti |w|, memaksa banyak bobot tepat nol (feature selection otomatis)\n• Pada Neural Network, dropout 'memutus' neuron acak saat training agar tidak saling terlalu mengandalkan" },
       { type: "quick_quiz", question: { q: "Model Anda memiliki akurasi 99% di training set tapi hanya 60% di test set. Apa yang terjadi?", opts: ["Underfitting — model terlalu sederhana", "Overfitting — model menghafal data training, gagal menggeneralisasi", "Model sudah sempurna karena akurasi training 99%", "Bug pada kode program"], correct: 1, exp: "Benar! Gap besar antara performa training (99%) dan testing (60%) adalah tanda klasik overfitting. Model terlalu menghafal data training dan tidak bisa menggeneralisasi ke data baru." } },
     ],
   },
@@ -368,9 +373,9 @@ y = np.array([300, 500, 680, 870, 1150])
 model = LinearRegression()
 model.fit(X, y)
 
-print(f"Slope (m): {model.coef_[0]:.2f}")       # ~9.57
-print(f"Intercept (b): {model.intercept_:.2f}")  # ~16.67
-print(f"Prediksi 80m²: Rp {model.predict([[80]])[0]:.0f} juta")  # ~782` },
+print(f"Slope (m): {model.coef_[0]:.2f}")       # 9.41
+print(f"Intercept (b): {model.intercept_:.2f}")  # 22.79
+print(f"Prediksi 80m²: Rp {model.predict([[80]])[0]:.0f} juta")  # 775` },
       { type: "quick_quiz", question: { q: "Apa perbedaan utama antara Linear Regression dan Logistic Regression?", opts: ["Tidak ada perbedaan, keduanya identik", "Linear untuk prediksi angka kontinu, Logistic untuk klasifikasi (probabilitas 0-1)", "Logistic lebih akurat dari Linear untuk semua kasus", "Linear menggunakan garis lurus, Logistic menggunakan garis lengkung parabola"], correct: 1, exp: "Benar! Linear Regression memprediksi nilai kontinu (harga, suhu), sedangkan Logistic Regression memprediksi probabilitas kelas (0 atau 1) menggunakan fungsi sigmoid." } },
     ],
   },
@@ -487,6 +492,7 @@ model = GradientBoostingClassifier(
 )
 model.fit(X_train, y_train)
 print(f"Akurasi: {model.score(X_test, y_test):.2%}")  # ~96.67-100%` },
+      { type: "highlight", text: "🧮 Mekanisme residual: pohon pertama membuat prediksi baseline (mis. rata-rata target). Pohon berikutnya dilatih bukan pada target asli, melainkan pada **residual** = (target − prediksi saat ini). Prediksi akhir diakumulasi dengan bobot kecil:\npred = \sum_j \eta \cdot tree_j(x)\nDengan **learning rate** (eta) kecil, setiap pohon menyumbang sedikit saja — memperlambat learning demi mengurangi overfitting, ditambah membatasi jumlah pohon." },
       { type: "quick_quiz", question: { q: "Apa perbedaan utama antara Gradient Boosting dan Random Forest?", opts: ["Gradient Boosting menggunakan GPU, Random Forest menggunakan CPU", "Gradient Boosting membangun pohon secara sekuensial (setiap pohon memperbaiki kesalahan sebelumnya), Random Forest membangun pohon secara paralel (independen)", "Random Forest lebih baru daripada Gradient Boosting", "Gradient Boosting hanya untuk klasifikasi, Random Forest hanya untuk regresi"], correct: 1, exp: "Benar! Perbedaan fundamental: Random Forest membangun semua pohon secara independen dan paralel (bagging), sedangkan Gradient Boosting membangun pohon secara berurutan — setiap pohon baru belajar dari residual kesalahan pohon sebelumnya." } },
     ],
   },
@@ -756,4 +762,171 @@ for name, imp in zip(['Kelembaban', 'Suhu', 'pH', 'NPK'], model.feature_importan
       { type: "quick_quiz", question: { q: "Apa rekomendasi sistem jika skor kualitas tanah menunjukkan 'Kurang Ideal'?", opts: ["Tidak melakukan apapun", "Irigasi tambahan, penyesuaian pH dengan kapur/belerang, dan pemupukan NPK", "Mencabut semua tanaman kopi", "Menambah sensor baru"], correct: 1, exp: "Benar! Sistem memberikan rekomendasi tindakan spesifik: irigasi jika kelembaban rendah, kapur/belerang jika pH tidak sesuai, pemupukan jika NPK kurang — membantu petani bertindak cepat dan tepat." } },
     ],
   },
+"m7-anatomi-nn": {
+    id: "m7-anatomi-nn", title: "Anatomi Neural Network", moduleTitle: "Deep Learning & Neural Network",
+    summary: "Anatomi jaringan saraf: neuron, lapisan, bobot, bias, dan fungsi aktivasi.",
+    contentBlocks: [
+      { type: "paragraph", text: "Neural network (NN) adalah fondasi deep learning. Berbeda dengan satu model statistik, NN menumpuk banyak lapisan neuron yang saling terhubung sehingga mampu menangkap pola yang jauh lebih kompleks. Setiap neuron pada lapisan tersembunyi menerima seluruh output lapisan sebelumnya, menghitung kombinasi W·x + b, lalu menerapkan fungsi aktivasi non-linear. Karena bertumpuk, lapisan awal belajar pola sederhana sedangkan lapisan dalam belajar representasi yang makin abstrak." },
+      { type: "highlight", text: "Anatomi NN:\\n• Neuron — unit kalkulasi yang menerima input dan menghasilkan output.\\n• Bobot (W) dan bias (b) — parameter yang dioptimalkan saat training.\\n• Aktivasi — fungsi non-linear (ReLU, Sigmoid, Tanh) agar mampu menangkap pola kompleks.\\n• Lapisan output menentukan bentuk prediksi (regresi vs klasifikasi)." },
+      { type: "formula", text: "y = f(W \\cdot x + b)" },
+      { type: "code", code: `from sklearn.neural_network import MLPClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X, y = load_iris(return_X_y=True)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+X_tr = scaler.fit_transform(X_tr)
+X_te = scaler.transform(X_te)
+
+model = MLPClassifier(hidden_layer_sizes=(8, 8), max_iter=400, random_state=42)
+model.fit(X_tr, y_tr)
+print(f"Akurasi: {model.score(X_te, y_te):.2%}")  # sekitar 97%` },
+      { type: "quick_quiz", question: { q: "Mengapa fungsi aktivasi harus non-linear?", opts: ["Agar model berjalan lebih cepat", "Tanpa non-linearitas, tumpukan lapisan linear setara satu lapisan sehingga tidak bisa menangkap pola kompleks", "Agar bobot tidak pernah berubah", "Agar jumlah hidden layer otomatis berubah"], correct: 1, exp: "Benar. Komposisi fungsi linear tetap linear; fungsi non-linear seperti ReLU yang memberi kemampuan menangkap pola kompleks." } }
+    ]
+  },
+  "m7-backpropagation": {
+    id: "m7-backpropagation", title: "Backpropagation & Optimasi", moduleTitle: "Deep Learning & Neural Network",
+    summary: "Cara jaringan belajar: hitung loss, sebar gradien via backpropagation, lalu geser bobot dengan optimizer.",
+    contentBlocks: [
+      { type: "paragraph", text: "Setelah forward pass menghasilkan prediksi, model menghitung selisih dengan target memakai loss (mis. MSE atau Cross-Entropy). Gradien loss terhadap setiap bobot diperoleh lewat aturan rantai (chain rule) dan disebar mundur (backpropagation) dari lapisan output menuju lapisan input. Setiap bobot kemudian digeser berlawanan arah gradien, diulang beberapa epoch hingga loss konvergen (tidak turun signifikan lagi)." },
+      { type: "highlight", text: "Optimizer populer: • SGD — menggeser bobot mengikuti gradien. • Momentum — menambah faktor inersia agar gerakan lebih cepat. • Adam — adaptif per parameter, menjadi default di banyak framework. Membungkus learning rate: nilai kecil memperlambat training, nilai besar berisiko melompat melewati titik optimum." },
+      { type: "formula", text: "w \\leftarrow w - \\eta \\frac{\\partial L}{\\partial w}" },
+      { type: "code", code: `import numpy as np
+x = np.array([1., 2., 3.])
+y = np.array([2., 4., 6.])
+w = 0.0
+lr = 0.25
+for step in range(5):
+    pred = w * x
+    loss = np.mean((pred - y) ** 2)
+    grad = np.mean(2 * (pred - y) * x)
+    w -= lr * grad
+    print(f"step {step}: loss={loss:.4f}, w={w:.3f}")` },
+      { type: "quick_quiz", question: { q: "Apa peran learning rate pada gradient descent?", opts: ["Menentukan ukuran langkah pergeseran bobot", "Menghapus bobot saat training selesai", "Menambah jumlah data training", "Mengganti fungsi aktivasi"], correct: 0, exp: "Benar. Learning rate mengatur besar pergeseran bobot tiap langkah; nilai besar bisa melewati titik optimum, nilai kecil membuat training lambat." } }
+    ]
+  },
+  "m7-regularisasi-dl": {
+    id: "m7-regularisasi-dl", title: "Regularisasi Jaringan Deep", moduleTitle: "Deep Learning & Neural Network",
+    summary: "Teknik anti-overfit jaringan dalam: early stopping, dropout, L2, dan data augmentation.",
+    contentBlocks: [
+      { type: "paragraph", text: "Jaringan dalam punya banyak parameter sehingga mudah menghafal data pelatihan (overfit). Strategi kuncinya: early stopping menghentikan training segera setelah loss validasi naik; dropout mematikan neuron secara acak saat training agar jaringan tidak terlalu bergantung pada satu neuron; regularisasi L1/L2 menekan besarnya bobot; dan data augmentation menambah variasi data dibutuhkan terutama untuk gambar." },
+      { type: "highlight", text: "Toolkit regularisasi: • Early stopping — berhenti saat loss validation mulai naik. • Dropout — memutus neuron acak tiap batch. • L2 / weight decay — penalti besar kuadrat bobot. • Data augmentation — rotasi, crop, flip untuk variasi data. • Batch Normalization — menstabilkan skala aktivasi antar lapisan." },
+      { type: "code", code: `from sklearn.neural_network import MLPClassifier
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+X, y = load_breast_cancer(return_X_y=True)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+sc = StandardScaler().fit(X_tr)
+X_tr, X_te = sc.transform(X_tr), sc.transform(X_te)
+
+# alpha (L2) dan early_stopping membantu mencegah overfit
+model = MLPClassifier(hidden_layer_sizes=(16,), alpha=0.01, max_iter=600, early_stopping=True)
+model.fit(X_tr, y_tr)
+print(f"Akurasi: {model.score(X_te, y_te):.2%}")` },
+      { type: "quick_quiz", question: { q: "Manakah yang paling sedikit membantu mengurangi overfitting?", opts: ["Mengumpulkan lebih banyak data", "Teknik dropout", "Regularisasi L2", "Menambah banyak hidden layer dan neuron"], correct: 3, exp: "Menambah kapasitas model memperbesar peluang overfit; opsi lain menekan overfit." } }
+    ]
+  },
+  "m7-cnn": {
+    id: "m7-cnn", title: "Convolutional Neural Network (CNN)", moduleTitle: "Deep Learning & Neural Network",
+    summary: "Menangkap pola pada data bergambar-grid lewat konvolusi, pooling, dan flatten.",
+    contentBlocks: [
+      { type: "paragraph", text: "Convolutional Neural Network (CNN) dirancang untuk data dalam bentuk grid seperti gambar. Alih-alih memproses semua piksel sekaligus, CNN menggeser filter kecil (kernel) melintasi array input untuk membentuk feature map yang menangkap pola lokal berupa tepi, tekstur, lalu objek. Lapisan pooling (misalnya max-pooling) mengecilkan ukuran feature map sehingga lebih hemat komputasi dan lebih kuat terhadap pergeseran kecil pada input." },
+      { type: "highlight", text: "Piramida CNN: • Convolution — filter digeser (stride) untuk menangkap pola lokal. • Padding — menambah sisi agar ukuran output terkontrol. • Pooling (Max/Avg) — downsampling, hemat biaya, mengurangi overfitting. • Flatten → Dense — meratakan feature map untuk prediksi akhir. CNN unggul untuk gambar, audio (spektrogram), dan sinyal sensor." },
+      { type: "code", code: `import numpy as np
+img = np.arange(16., dtype=float).reshape(4, 4)
+kernel = np.array([[1, 0], [-1, 1]])
+fH, fW = kernel.shape
+out = np.zeros((img.shape[0] - fH + 1, img.shape[1] - fW + 1))
+for i in range(out.shape[0]):
+    for j in range(out.shape[1]):
+        out[i, j] = np.sum(img[i:i+fH, j:j+fW] * kernel)
+print("feature map berukuran:", out.shape)` },
+      { type: "quick_quiz", question: { q: "Apa fungsi utama lapisan pooling pada CNN?", opts: ["Menambah resolusi gambar", "Mengurangi ukuran feature map dan menambah ketahanan terhadap pergeseran kecil", "Menghapus seluruh noise dari gambar", "Mengubah gambar menjadi grayscale"], correct: 1, exp: "Benar. Pooling mengecilkan feature map (downsampling) sehingga lebih hemat komputasi dan lebih tahan terhadap perubahan posisi kecil." } }
+    ]
+  },
+  "m7-rnn-lstm": {
+    id: "m7-rnn-lstm", title: "RNN, LSTM & Data Berurutan", moduleTitle: "Deep Learning & Neural Network",
+    summary: "Memproses data sekuensial: kesulitan RNN dan solusi memori jangka panjang oleh LSTM.",
+    contentBlocks: [
+      { type: "paragraph", text: "Untuk data yang berurutan seperti teks, deret waktu, atau sinyal sensor, model perlu mengingat konteks dari langkah sebelumnya. Recurrent Neural Network (RNN) memproses input elemen demi elemen dan menyimpan hidden state yang turut dihitung pada langkah berikutnya. Kelemahannya, RNN sulit mengingat informasi yang lama karena vanishing gradient. Long Short-Term Memory (LSTM) mengatasi ini dengan gerbang forget, input, dan output untuk memutuskan informasi mana yang diingat atau dibuang. GRU adalah varian yang lebih ringan." },
+      { type: "highlight", text: "Runtun & memori: • RNN — hidden state mengalir di tiap langkah waktu. • LSTM — gerbang forget/input/output mengatur ingatan jangka panjang. • GRU — varian sederhana dengan dua gerbang. • Berguna untuk prediksi deret waktu, NLP, dan pemrosesan sinyal." },
+      { type: "quick_quiz", question: { q: "Mengapa LSTM mengungguli RNN dasar untuk deret panjang?", opts: ["LSTM tidak memiliki parameter yang dilatih", "LSTM punya gerbang yang mengatur penyimpanan dan pembuangan informasi", "LSTM langsung menjadi model tanpa lapisan", "LSTM hanya bisa dipakai untuk gambar"], correct: 1, exp: "Benar. Gerbang (forget, input, output) memungkinkan LSTM menyimpan atau membuang informasi secara selektif, sehingga mampu menjangkau ketergantungan jangka panjang." } }
+    ]
+  },
+  "m7-kuis": {
+    id: "m7-kuis", title: "Kuis Deep Learning", moduleTitle: "Deep Learning & Neural Network",
+    summary: "Uji pemahaman soal neural network, backpropagation, regularisasi, CNN, dan LSTM.",
+    contentBlocks: [
+      { type: "quick_quiz", question: { q: "Kegunaan utama lapisan pooling pada CNN?", opts: ["Meningkatkan kadar gambar", "Mengurangi ukuran feature map dan menambah ketahanan terhadap pergeseran kecil", "Menghilangkan seluruh data", "Menambah jumlah filter"], correct: 1, exp: "Benar. Pooling melakukan downsampling sehingga hemat komputasi dan lebih tahan terhadap posisi kecil." } },
+      { type: "quick_quiz", question: { q: "Diklasifikasi multi-kelas, fungsi loss yang lazim dipakai?", opts: ["Mean squared error murni di NN", "Cross-Entropy Loss", "Fungsi identitas", "Jarak Euclidean"], correct: 1, exp: "Benar. Cross-Entropy Loss cocok untuk klasifikasi karena menghukum kesalahan probabilitas kelas." } },
+      { type: "quick_quiz", question: { q: "Selama training, teknik dropout bekerja dengan cara?", opts: ["Menambah neuron secara acak", "Memutus sebagian neuron secara acak agar tidak saling terlalu bergantung", "Mengganti fungsi aktivasi", "Menghapus fitur duplikat di dataset"], correct: 1, exp: "Benar. Dropout menonaktifkan sebagian neuron secara acak tiap batch sehingga mencegah overfitting dan co-adaptation." } },
+      { type: "quick_quiz", question: { q: "Gambar cocok diproses dengan arsitektur?", opts: ["LSTM", "Convolutional Neural Network", "Naive Bayes", "Regresi Linear"], correct: 1, exp: "Benar. CNN dirancang untuk menangkap struktur spasial pada data grid seperti gambar." } },
+      { type: "quick_quiz", question: { q: "Mengapa backpropagation diperlukan?", opts: ["Mengganti seluruh bobot acak", "Menghitung gradien loss terhadap setiap bobot untuk menggeser bobot", "Menggabungkan data training", "Membuat data menjadi statis"], correct: 1, exp: "Benar. Backpropagation menyebar nilai loss ke mundur (aturan rantai) sehingga tiap bobot tahu arah optimalnya." } }
+    ]
+  }
+,
+  "m8-transformer": {
+    id: "m8-transformer", title: "Transformer & Self-Attention", moduleTitle: "AI Modern: Transformer & LLM",
+    summary: "Arsitektur di balik model bahasa modern: self-attention, multi-head, dan positional encoding.",
+    contentBlocks: [
+      { type: "paragraph", text: "Transformer mengubah cara memproses data berurutan. Berbeda dengan RNN yang memproses token satuan per satuan, Transformer memakai self-attention sehingga semua token diproses secara paralel. Tiap token direpresentasikan sebagai tiga vektor: Query (Q), Key (K), dan Value (V). Attention menghitung ketergantungan antar token dengan mencocokkan Query suatu token dengan Key token lainnya, lalu hasil bobot dipakai untuk menimbang Value. Multi-head menjalankan beberapa proyeksi ini sekaligus sehingga model menangkap berbagai jenis hubungan. Karena tidak lagi berurutan, posisi token dipulihkan lewat positional encoding (misalnya RoPE)." },
+      { type: "formula", text: "Attention(Q,K,V) = softmax(QK^{\\mathsf{T}} / \\sqrt{d_k}) \\cdot V" },
+      { type: "highlight", text: "Kata kunci: • Self-attention — tiap token mempertimbangkan konteks semua token lain. • Multi-head attention — beberapa proyeksi paralel untuk menangkap ragam hubungan. • Q, K, V — Query, Key, Value untuk mencocokkan konteks. • Positional encoding / RoPE — memberi tahu model urutan. • Skala 1/√d_k — menjaga stabilitas softmax." },
+      { type: "code", code: `import numpy as np
+# ilustrasi kecil self-attention (tanpa training)
+X = np.random.rand(4, 32)          # 4 token, 32 dimensi
+Wk = np.random.rand(32, 16) / 16
+Wq = np.random.rand(32, 16) / 16
+Wv = np.random.rand(32, 16) / 16
+K = X @ Wk; Q = X @ Wq; V = X @ Wv
+scores = Q @ K.T / np.sqrt(16)
+scores = scores - scores.max(axis=1, keepdims=True)
+weights = np.exp(scores) / np.exp(scores).sum(axis=1, keepdims=True)
+out = weights @ V
+print("ukuran output attention:", out.shape)` },
+      { type: "quick_quiz", question: { q: "Mengapa attention hasil perlu dibagi skala √d_k?", opts: ["Mengurangi dimensi model", "Menarankan agar softmax tidak menghasilkan nilai yang terlalu ekstrem", "Mengganti fungsi aktivasi", "Menambah jumlah lapisan"], correct: 1, exp: "Benar. Skala √d_k menstabilkan hasil perkalian dot agar softmax tidak jenuh ke 0 atau 1." } }
+    ]
+  },
+  "m8-llm": {
+    id: "m8-llm", title: "Model Bahasa Besar (LLM)", moduleTitle: "AI Modern: Transformer & LLM",
+    summary: "Pipelne latihan LLM: tokenisasi, pretrain, SFT, dan penyelarasan dengan RLHF/DPO.",
+    contentBlocks: [
+      { type: "paragraph", text: "Model bahasa besar (LLM) adalah Transformer yang dilatih di atas teks berskala besar. Tahap pertama adalah pretrain dengan memprediksi token berikutnya (next-token prediction) pada miliaran dokumen sehingga terbentuk model bahasa yang umum. Selanjutnya, Supervised Fine-Tuning (SFT) melatih model mengikuti instruksi, lalu penyelarasan seperti RLHF atau DPO membuat output lebih selaras dengan nilai dan preferensi. RLVR (Reinforcement Learning with Verifiable Reward) yang dipopulerkan DeepSeek-R1 memperkuat kemampuan reasoning dengan memberi reward yang bisa diverifikasi." },
+      { type: "highlight", text: "Pipa LLM: • Tokenizer — memecah teks menjadi token. • Pretrain — prediksi token berikutnya di teks besar. • SFT — mengikuti instruksi. • RLHF / DPO / RLVR — penyelarasan dan reasoning. • Context window — banyak token yang bisa diproses sekaligus. Aturan scaling: model lebih besar + data lebih banyak umumnya meningkatkan kualitas, dengan biaya dan energi yang naik." },
+      { type: "quick_quiz", question: { q: "Urutan pelatihan LLM yang benar?", opts: ["SFT → Pretrain → RLHF", "Pretrain → SFT → RLHF / DPO", "RLHF → Pretrain → SFT", "Tokenisasi dimulai paling akhir"], correct: 1, exp: "Benar. Urutan umum: pretraining next-token, lalu supervised fine-tuning, kemudian alignment (RLHF/DPO/RLVR)." } }
+    ]
+  },
+  "m8-agentic": {
+    id: "m8-agentic", title: "Agen AI, RAG & MCP", moduleTitle: "AI Modern: Transformer & LLM",
+    summary: "Model yang beraksi: agent loop, retrieval-augmented generation, dan Model Context Protocol.",
+    contentBlocks: [
+      { type: "paragraph", text: "Agen AI melangkah dari chatbot pasif menjadi entitas yang menjalankan tugas. Ia bercakap dalam sebuah loop: memahami tujuan → merencanakan → memanggil alat (function calling) → mengamati hasil → mengulang hingga tujuan tercapai. RAG (Retrieval-Augmented Generation) memungkinkan model menjawab berdasar dokumen yang ditarik dari basis pengetahuan, sehingga jawaban relevan dan bisa diverifikasi. MCP (Model Context Protocol) adalah standar terbuka yang menghubungkan model ke tools dan sumber data eksternal secara konsisten, memudahkan agen mengambil data, menjadwalkan, atau mengotomasi proses." },
+      { type: "highlight", text: "Rangka kerja agen: • Loop — reason, plan, act, observe, repeat. • Function calling — model memilih dan memanggil fungsi tertentu. • RAG — kumpulkan dokumen relevan lalu susun jawaban. • MCP — standar koneksi model ke tools/data. Nilai praktiknya: bukan sekadar merampung jawaban, tapi menyelesaikan pekerjaan nyata." },
+      { type: "quick_quiz", question: { q: "Apa manfaat utama RAG bagi LLM?", opts: ["Mempercepat pelatihan", "Menjawab dengan basis pengetahuan eksternal yang ditarik (tidak hanya hafalan bobot)", "Menambah jumlah token", "Mengganti GPU"], correct: 1, exp: "Benar. RAG mengambil dokumen relevan dari sumber eksternal dan menjadikan LLM sebagai penyusun jawaban, sehingga informasi lebih aktual dan terverifikasi." } }
+    ]
+  },
+  "m8-sota": {
+    id: "m8-sota", title: "Tren AI 2025-2026", moduleTitle: "AI Modern: Transformer & LLM",
+    summary: "Arahan state-of-the-art: agen AI, RLVR, small language model, MoE, dan multimodal.",
+    contentBlocks: [
+      { type: "paragraph", text: "Beberapa tren menonjol tahun 2025-2026: (1) AI Agents, MCP, dan RAG menjadi arsitektur inti — model diajak mampu memakai alat untuk tugas nyata. (2) RLVR (Reinforcement Learning with Verifiable Reward) dan test-time compute memperkuat kemampuan reasoning, seperti pada DeepSeek-R1 dan model reasoning lain. (3) Small Language Model (SLM) dan eksekusi on-device menjadi tren karena efisiensi — model kecil yang berjalan di ponsel atau PC. (4) Mixture-of-Experts (MoE) memungkinkan model sangat besar dengan biaya aktif rendah. (5) Multimodal mengombinasikan teks, gambar, audio, dan video dalam satu model." },
+      { type: "highlight", text: "Sorotan kunci: • AI Agents + MCP + RAG — fokus pada eksekusi tugas nyata. • RLVR / test-time compute — reasoning terverifikasi. • SLM & edge — menjalankan AI di perangkat terbatas. • MoE — hanya meng-aktifkan sebagian ekspert per token. • Multimodal — satu model untuk teks, gambar, audio." },
+      { type: "quick_quiz", question: { q: "Bagaimana Mixture-of-Experts meningkatkan efisiensi?", opts: ["Mengaktifkan semua parameter setiap token", "Mengaktifkan hanya sebagian kecil 'expert' per token sehingga hemat komputasi", "Menghapus GPU yang tidak terpakai", "Menambah data"], correct: 1, exp: "Benar. MoE menyimpan banyak 'expert', tapi hanya mengaktifkan sebagian kecil untuk setiap token, jadi kapasitas besar dengan biaya komputer tetap rendah." } }
+    ]
+  },
+  "m8-kuis": {
+    id: "m8-kuis", title: "Kuis AI Modern", moduleTitle: "AI Modern: Transformer & LLM",
+    summary: "Uji pemahaman soal Transformer, LLM, RAG, agen AI, MoE, dan tren 2025-2026.",
+    contentBlocks: [
+      { type: "quick_quiz", question: { q: "Pada Transformer, untuk apa positional encoding (RoPE)?", opts: ["Memberi tahu model posisi/urutan token", "Mengganti fungsi aktivasi", "Mengompres gambar", "Menghapus token duplikat"], correct: 0, exp: "Benar. Karena semua token diproses paralel, model perlu penanda posisi agar memahami urutan." } },
+      { type: "quick_quiz", question: { q: "Apa kegunaan utama RAG (Retrieval-Augmented Generation)?", opts: ["Mempercepat pelatihan model", "Menarik dokumen dari sumber eksternal lalu menyusun jawaban yang relevan", "Mengganti tokenizer", "Mempercepat backpropagation"], correct: 1, exp: "Benar. RAG mengambil informasi terkini dari basis pengetahuan sebelum menjawab, sehingga jawaban lebih akurat dan terverifikasi." } },
+      { type: "quick_quiz", question: { q: "Tren apa yang paling mendekatkan model pada penyelesaian pekerjaan nyata?", opts: ["AI Agents dan MCP", "Mengeksekusi alat lewat script", "Sistem database relasional", "OCR"], correct: 0, exp: "Benar. Loop agen + protocol (MCP) + menggabungkan alat dan data membuat model mampu menjalankan tugas nyata seperti mengelola kalender dan database." } },
+      { type: "quick_quiz", question: { q: "Manakah yang benar mengenai Small Language Model (SLM)?", opts: ["Menjalankan AI makin di device dengan biaya efisien", "Selalu lebih akurat dari LLM besar", "Tidak bisa dijalankan di CPU", "Hanya bekerja dengan teks"], correct: 0, exp: "Benar. SLM mengejar efisiensi dan kelayakan dipakai di perangkat (laptop/ponsel) untuk kebutuhan spesifik." } },
+      { type: "quick_quiz", question: { q: "Kenapa Transformer lebih cepat dilatih daripada RNN?", opts: ["Karena proses semua token secara paralel", "Karena menghilangkan fungsi aktivasi", "Karena memakai data yang sangat kecil", "Karena tanpa positional encoding"], correct: 0, exp: "Benar. Self-attention memproses seluruh token sekaligus (paralel), sedangkan RNN berurutan." } }
+    ]
+  }
 }

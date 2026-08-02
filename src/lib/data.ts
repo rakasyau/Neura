@@ -95,6 +95,37 @@ export const modules: Module[] = [
       { id: "m6-kuis", title: "Kuis Studi Kasus", duration: 8 },
     ],
   },
+  {
+    id: "m7-deep-learning",
+    number: 7,
+    title: "Deep Learning & Neural Network",
+    description: "Inti jaringan saraf, cara backpropagation mengajarnya, serta arsitektur CNN untuk gambar dan RNN/LSTM untuk data berurutan.",
+    icon: "layers",
+    totalDuration: 90,
+    chapters: [
+      { id: "m7-anatomi-nn", title: "Anatomi Neural Network", duration: 12 },
+      { id: "m7-backpropagation", title: "Backpropagation & Optimasi", duration: 15 },
+      { id: "m7-regularisasi-dl", title: "Regularisasi Jaringan Deep", duration: 12 },
+      { id: "m7-cnn", title: "Convolutional Neural Network (CNN)", duration: 15 },
+      { id: "m7-rnn-lstm", title: "RNN, LSTM & Data Berurutan", duration: 15 },
+      { id: "m7-kuis", title: "Kuis Deep Learning", duration: 6 },
+    ],
+  },
+  {
+    id: "m8-ai-modern",
+    number: 8,
+    title: "AI Modern: Transformer & LLM",
+    description: "Self-attention, model bahasa besar, agen AI, hingga tren state-of-the-art 2025-2026 teknologi di balik ChatGPT, Claude, dan Gemini.",
+    icon: "brain",
+    totalDuration: 95,
+    chapters: [
+      { id: "m8-transformer", title: "Transformer & Self-Attention", duration: 18 },
+      { id: "m8-llm", title: "Model Bahasa Besar (LLM)", duration: 20 },
+      { id: "m8-agentic", title: "Agen AI, RAG & MCP", duration: 18 },
+      { id: "m8-sota", title: "Tren AI 2025-2026", duration: 15 },
+      { id: "m8-kuis", title: "Kuis AI Modern", duration: 6 },
+    ],
+  },
 ]
 
 export const algorithms: Algorithm[] = [
