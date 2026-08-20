@@ -1,8 +1,10 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, ReactNode } from "react"
 import { motion } from "framer-motion"
-import { Bot, Send, User, RefreshCw, Copy, Check, Terminal } from "lucide-react"
+import { Bot, Send, User, RefreshCw, Copy, Check, Terminal, ExternalLink } from "lucide-react"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 import { notify } from "@/components/ui/Toast"
 
 interface Message {
@@ -21,8 +23,8 @@ interface AIChatWidgetProps {
   userName?: string
 }
 
-// Custom Markdown Code Block Component
-function CodeBlockView({ language, code }: { language: string; code: string }) {
+// Custom Markdown Code Block Component with Copy Button
+function CodeBlockView({ language, code }: { language?: string; code: string }) {
   const [copied, setCopied] = useState(false)
 
   const handleCopyCode = () => {
@@ -33,9 +35,9 @@ function CodeBlockView({ language, code }: { language: string; code: string }) {
   }
 
   return (
-    <div className="my-3 rounded-panel overflow-hidden border border-neura-line bg-neura-deep shadow-xl">
+    <div className="my-3 rounded-panel overflow-hidden border border-neura-line bg-neura-deep shadow-xl not-prose">
       {/* Code Header Bar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-neura-deep/85 border-b border-neura-line text-xs font-mono">
+      <div className="flex items-center justify-between px-4 py-2 bg-neura-deep/90 border-b border-neura-line text-xs font-mono">
         <div className="flex items-center gap-2 text-neura-cyan">
           <Terminal className="w-3.5 h-3.5 text-neura-cyan" />
           <span className="lowercase font-bold tracking-wide">{language || "code"}</span>
@@ -66,137 +68,158 @@ function CodeBlockView({ language, code }: { language: string; code: string }) {
   )
 }
 
-// Helper to render inline markdown elements (bold, inline code, italic)
-function renderInlineText(text: string): React.ReactNode[] {
-  const tokens = text.split(/(\*\*.*?\*\*|`.*?`|\*.*?\*)/g)
-
-  return tokens.map((token, i) => {
-    if (token.startsWith("**") && token.endsWith("**") && token.length >= 4) {
-      return (
-        <strong key={i} className="font-bold text-white">
-          {token.slice(2, -2)}
-        </strong>
-      )
-    }
-    if (token.startsWith("`") && token.endsWith("`") && token.length >= 2) {
-      return (
-        <code
-          key={i}
-          className="px-1.5 py-0.5 bg-neura-deep/80 text-neura-amber font-mono text-[11px] rounded border border-neura-line mx-0.5 inline-block"
-        >
-          {token.slice(1, -1)}
-        </code>
-      )
-    }
-    if (token.startsWith("*") && token.endsWith("*") && token.length >= 2 && !token.startsWith("**")) {
-      return (
-        <em key={i} className="italic text-neura-cyan">
-          {token.slice(1, -1)}
-        </em>
-      )
-    }
-    return token
-  })
-}
-
-// Text block renderer with heading and list support
-function FormattedTextBlock({ content }: { content: string }) {
-  const lines = content.split("\n")
-
+// Rich Markdown Message Renderer with GitHub Flavored Markdown (GFM)
+function MarkdownMessage({ content }: { content: string }) {
   return (
-    <div className="space-y-1 leading-relaxed">
-      {lines.map((line, idx) => {
-        const trimmed = line.trim()
-        if (!trimmed) return <div key={idx} className="h-1.5" />
-
-        // Headers
-        if (trimmed.startsWith("### ")) {
-          return (
-            <h4 key={idx} className="text-xs sm:text-sm font-bold text-neura-cyan mt-3 mb-1 font-display">
-              {renderInlineText(trimmed.slice(4))}
-            </h4>
-          )
-        }
-        if (trimmed.startsWith("## ") || trimmed.startsWith("# ")) {
-          return (
-            <h3 key={idx} className="text-sm sm:text-base font-bold text-white mt-3 mb-1 font-display">
-              {renderInlineText(trimmed.replace(/^#+\s*/, ""))}
+    <div className="markdown-content text-xs sm:text-sm text-neura-text leading-relaxed">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          // Headings
+          h1: ({ children }) => (
+            <h2 className="text-base sm:text-lg font-bold font-display text-white mt-4 mb-2 first:mt-0 tracking-tight">
+              {children}
+            </h2>
+          ),
+          h2: ({ children }) => (
+            <h3 className="text-sm sm:text-base font-bold font-display text-white mt-4 mb-2 first:mt-0 pb-1 border-b border-neura-line">
+              {children}
             </h3>
-          )
-        }
+          ),
+          h3: ({ children }) => (
+            <h4 className="text-xs sm:text-sm font-bold font-display text-neura-cyan mt-3 mb-1.5 first:mt-0">
+              {children}
+            </h4>
+          ),
+          h4: ({ children }) => (
+            <h5 className="text-xs sm:text-sm font-bold text-white mt-2.5 mb-1 first:mt-0">
+              {children}
+            </h5>
+          ),
 
-        // Bullet lists
-        if (/^[-*•]\s+/.test(trimmed)) {
-          const listText = trimmed.replace(/^[-*•]\s+/, "")
-          return (
-            <div key={idx} className="flex items-start gap-2 pl-2 text-xs sm:text-sm my-0.5">
-              <span className="text-neura-cyan shrink-0 mt-0.5 font-bold">•</span>
-              <div>{renderInlineText(listText)}</div>
+          // Paragraphs
+          p: ({ children }) => (
+            <p className="my-2 leading-relaxed text-neura-text/95 first:mt-0 last:mb-0">
+              {children}
+            </p>
+          ),
+
+          // Lists
+          ul: ({ children }) => (
+            <ul className="space-y-1.5 my-2.5 pl-5 list-disc marker:text-neura-cyan text-neura-text/90">
+              {children}
+            </ul>
+          ),
+          ol: ({ children }) => (
+            <ol className="space-y-1.5 my-2.5 pl-5 list-decimal marker:text-neura-amber marker:font-bold text-neura-text/90">
+              {children}
+            </ol>
+          ),
+          li: ({ children }) => (
+            <li className="leading-relaxed pl-1 text-xs sm:text-sm">
+              {children}
+            </li>
+          ),
+
+          // Strong & Emphasis
+          strong: ({ children }) => (
+            <strong className="font-bold text-white">
+              {children}
+            </strong>
+          ),
+          em: ({ children }) => (
+            <em className="italic text-neura-cyan/90">
+              {children}
+            </em>
+          ),
+
+          // Horizontal Rule
+          hr: () => (
+            <hr className="my-4 border-neura-line" />
+          ),
+
+          // Blockquote
+          blockquote: ({ children }) => (
+            <blockquote className="border-l-2 border-neura-cyan pl-3.5 py-1.5 my-3 bg-neura-raised/40 rounded-r-lg text-neura-muted italic">
+              {children}
+            </blockquote>
+          ),
+
+          // Table Elements (GFM)
+          table: ({ children }) => (
+            <div className="overflow-x-auto my-3.5 rounded-lg border border-neura-line bg-neura-deep/70 shadow-md">
+              <table className="w-full border-collapse text-left text-xs">
+                {children}
+              </table>
             </div>
-          )
-        }
+          ),
+          thead: ({ children }) => (
+            <thead className="bg-neura-raised border-b border-neura-line text-neura-cyan font-bold font-display">
+              {children}
+            </thead>
+          ),
+          tbody: ({ children }) => (
+            <tbody className="divide-y divide-neura-line/50">
+              {children}
+            </tbody>
+          ),
+          tr: ({ children }) => (
+            <tr className="hover:bg-neura-panel/50 transition-colors even:bg-neura-panel/20">
+              {children}
+            </tr>
+          ),
+          th: ({ children }) => (
+            <th className="px-4 py-2.5 font-bold border-r border-neura-line/40 last:border-r-0 whitespace-nowrap">
+              {children}
+            </th>
+          ),
+          td: ({ children }) => (
+            <td className="px-4 py-2.5 border-r border-neura-line/30 last:border-r-0 text-neura-text/90 align-top leading-relaxed">
+              {children}
+            </td>
+          ),
 
-        // Numbered lists
-        const numMatch = trimmed.match(/^(\d+)\.\s+(.*)/)
-        if (numMatch) {
-          return (
-            <div key={idx} className="flex items-start gap-2 pl-2 text-xs sm:text-sm my-0.5">
-              <span className="text-neura-amber font-mono text-xs font-bold shrink-0 mt-0.5">{numMatch[1]}.</span>
-              <div>{renderInlineText(numMatch[2])}</div>
-            </div>
-          )
-        }
+          // Code
+          code({ className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || "")
+            const codeString = String(children).replace(/\n$/, "")
+            const isInline = !match && !String(children).includes("\n")
 
-        // Normal paragraph line
-        return (
-          <p key={idx} className="text-xs sm:text-sm">
-            {renderInlineText(line)}
-          </p>
-        )
-      })}
-    </div>
-  )
-}
+            if (isInline) {
+              return (
+                <code
+                  className="px-1.5 py-0.5 bg-neura-deep text-neura-amber font-mono text-[11px] sm:text-xs rounded border border-neura-line mx-0.5 inline-block"
+                  {...props}
+                >
+                  {children}
+                </code>
+              )
+            }
 
-// Master Markdown Parser (separates code blocks from text blocks)
-function FormattedMessage({ content }: { content: string }) {
-  const codeBlockRegex = /```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g
-  const blocks: Array<{ type: "code"; language: string; code: string } | { type: "text"; content: string }> = []
+            return (
+              <CodeBlockView
+                language={match ? match[1] : undefined}
+                code={codeString}
+              />
+            )
+          },
 
-  let lastIndex = 0
-  let match: RegExpExecArray | null
-
-  while ((match = codeBlockRegex.exec(content)) !== null) {
-    const textBefore = content.slice(lastIndex, match.index)
-    if (textBefore.trim()) {
-      blocks.push({ type: "text", content: textBefore })
-    }
-    blocks.push({
-      type: "code",
-      language: match[1] || "python",
-      code: match[2].trimEnd(),
-    })
-    lastIndex = match.index + match[0].length
-  }
-
-  const textAfter = content.slice(lastIndex)
-  if (textAfter.trim()) {
-    blocks.push({ type: "text", content: textAfter })
-  }
-
-  // Fallback if no regex match was found
-  if (blocks.length === 0) {
-    blocks.push({ type: "text", content })
-  }
-
-  return (
-    <div className="space-y-2">
-      {blocks.map((block, i) => {
-        if (block.type === "code") {
-          return <CodeBlockView key={i} language={block.language} code={block.code} />
-        }
-        return <FormattedTextBlock key={i} content={block.content} />
-      })}
+          // Links
+          a: ({ href, children }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neura-cyan hover:underline inline-flex items-center gap-1 font-medium"
+            >
+              {children}
+              <ExternalLink className="w-3 h-3 inline" />
+            </a>
+          ),
+        }}
+      >
+        {content}
+      </ReactMarkdown>
     </div>
   )
 }
@@ -205,7 +228,7 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: `Halo **${userName}**! 👋 Saya **Neura AI Assistant**. Ada materi Machine Learning atau kode Python yang ingin kamu tanyakan atau diskusikan hari ini?`,
+      content: `Halo **${userName}**! 👋 Saya **Neura AI Assistant**.\n\nAda materi Machine Learning atau kode Python yang ingin kamu tanyakan atau diskusikan hari ini? Silakan ajukan pertanyaan atau pilih salah satu topik di bawah.`,
     },
   ])
   const [input, setInput] = useState("")
@@ -254,10 +277,10 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
         ])
         notify("Gagal Terhubung AI", errorMsg, "error")
       }
-    } catch (err: any) {
+    } catch {
       setMessages([
         ...newMessages,
-        { role: "assistant", content: `❌ **Error:** Terjadi kendala jaringan.` },
+        { role: "assistant", content: `❌ **Error:** Terjadi kendala jaringan saat menghubungi server.` },
       ])
     } finally {
       setLoading(false)
@@ -322,16 +345,16 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
             )}
 
             <div
-              className={`relative group max-w-[85%] sm:max-w-[78%] p-4 rounded-panel text-xs sm:text-sm leading-relaxed ${
+              className={`relative group max-w-[90%] sm:max-w-[85%] p-4 sm:p-5 rounded-panel text-xs sm:text-sm leading-relaxed ${
                 m.role === "user"
                   ? "bg-neura-cyan text-neura-deep font-medium rounded-tr-none"
-                                    : "glass border border-neura-line text-white rounded-tl-none bg-neura-panel/40"
+                  : "glass border border-neura-line text-white rounded-tl-none bg-neura-panel/50 shadow-sm"
               }`}
             >
               {m.role === "assistant" && (
                 <button
                   onClick={() => handleCopy(m.content, idx)}
-                  className="absolute top-2 right-2 p-1.5 opacity-0 group-hover:opacity-100 glass rounded-lg text-neura-muted hover:text-white transition-all"
+                  className="absolute top-2 right-2 p-1.5 opacity-0 group-hover:opacity-100 glass rounded-lg text-neura-muted hover:text-white transition-all bg-neura-deep/80"
                   title="Salin Seluruh Respon"
                 >
                   {copiedIndex === idx ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -340,9 +363,9 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
 
               {/* Formatted Markdown & Code Blocks */}
               {m.role === "assistant" ? (
-                <FormattedMessage content={m.content} />
+                <MarkdownMessage content={m.content} />
               ) : (
-                <div className="whitespace-pre-wrap">{m.content}</div>
+                <div className="whitespace-pre-wrap font-medium">{m.content}</div>
               )}
             </div>
 
@@ -405,7 +428,7 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
             type="submit"
             disabled={loading || !input.trim()}
             aria-label="Kirim pesan"
-            className="p-3 bg-neura-cyan text-neura-deep rounded-panel font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50 shrink-0"
+            className="p-3 bg-neura-cyan text-neura-deep rounded-panel font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50 shrink-0 cursor-pointer"
           >
             <Send className="w-4 h-4 fill-current" />
           </button>
