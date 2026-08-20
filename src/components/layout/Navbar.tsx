@@ -87,7 +87,7 @@ export function Navbar() {
                   "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200",
                   isActive
                     ? "bg-neura-cyan/15 text-neura-cyan font-bold border border-neura-cyan/30 shadow-sm"
-                    : "text-slate-300 hover:text-white hover:bg-white/10"
+                    : "text-neura-muted hover:text-white hover:bg-neura-raised"
                 )}
               >
                 <link.icon className="w-3.5 h-3.5" />
@@ -102,11 +102,11 @@ export function Navbar() {
           {/* Quick Search Button */}
           <button
             onClick={() => setSearchOpen(true)}
-            className="flex items-center gap-1.5 h-8 px-2.5 text-xs text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-all border border-white/15"
+            className="flex items-center gap-1.5 h-10 px-3 text-xs text-neura-muted hover:text-white bg-neura-raised hover:bg-neura-raised rounded-full transition-all border border-neura-line"
             title="Cari (Ctrl+K)"
           >
             <Search className="w-3.5 h-3.5 text-neura-cyan" />
-            <span className="hidden xl:inline font-mono text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-slate-300">⌘K</span>
+            <span className="hidden xl:inline font-mono text-[11px] bg-neura-raised px-1.5 py-0.5 rounded text-neura-muted">⌘K</span>
           </button>
 
           {/* User Auth Section */}
@@ -115,18 +115,18 @@ export function Navbar() {
               {/* XP Badge (Only when logged in) */}
               <Link
                 href="/dashboard"
-                className="hidden sm:flex items-center gap-1.5 h-8 px-2.5 bg-amber-500/10 border border-amber-500/30 rounded-full text-xs font-bold font-mono text-amber-400 hover:bg-amber-500/20 transition-all shrink-0"
+                className="hidden sm:flex items-center gap-1.5 h-10 px-3 bg-neura-amber/10 border border-neura-amber/30 rounded-full text-xs font-bold font-mono text-neura-amber hover:bg-neura-amber/20 transition-all shrink-0"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <Sparkles className="w-3.5 h-3.5 text-neura-amber" />
                 {user.xp} XP
               </Link>
 
               {/* User Profile Pill */}
               <Link
                 href="/dashboard"
-                className="flex items-center gap-2 h-8 px-2.5 glass rounded-full text-xs font-bold text-white hover:border-neura-cyan/40 transition-all border border-white/15 shrink-0 max-w-[130px] sm:max-w-[160px]"
+                className="flex items-center gap-2 h-8 px-2.5 glass rounded-full text-xs font-bold text-white hover:border-neura-cyan/40 transition-all border border-neura-line shrink-0 max-w-[130px] sm:max-w-[160px]"
               >
-                <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-neura-cyan to-indigo-500 text-neura-deep flex items-center justify-center text-[10px] font-bold shrink-0">
+                <div className="w-5 h-5 rounded-full bg-neura-cyan text-neura-deep flex items-center justify-center text-[10px] font-bold shrink-0">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
                 <span className="truncate text-xs">{user.name.split(" ")[0]}</span>
@@ -135,7 +135,7 @@ export function Navbar() {
               {/* Logout Icon Button */}
               <button
                 onClick={handleLogout}
-                className="flex items-center justify-center h-8 w-8 glass rounded-full text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-all border border-white/15 shrink-0"
+                className="flex items-center justify-center h-8 w-8 glass rounded-full text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-all border border-neura-line shrink-0"
                 title="Keluar / Logout"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -143,7 +143,7 @@ export function Navbar() {
             </div>
           ) : (
             <Link href="/masuk">
-              <button className="flex items-center gap-1.5 h-8 px-3.5 text-xs font-bold text-neura-deep bg-neura-cyan rounded-full hover:bg-neura-cyan/90 transition-all shadow-md shadow-neura-cyan/20">
+              <button className="flex items-center gap-1.5 h-10 px-3.5 text-xs font-bold text-neura-deep bg-neura-cyan rounded-full hover:bg-neura-cyan/90 transition-all shadow-md">
                 <User className="w-3.5 h-3.5" />
                 Masuk
               </button>
@@ -153,7 +153,9 @@ export function Navbar() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden flex items-center justify-center h-8 w-8 text-slate-300 hover:text-white bg-white/5 rounded-full transition-all border border-white/15 ml-1"
+            aria-label={open ? "Tutup menu" : "Buka menu"}
+            aria-expanded={open}
+            className="lg:hidden flex items-center justify-center h-10 w-10 text-neura-muted hover:text-white bg-neura-raised rounded-full transition-all border border-neura-line ml-1"
           >
             {open ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
@@ -169,7 +171,7 @@ export function Navbar() {
             initial={{ opacity: 0, y: -10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            className="fixed top-20 left-4 right-4 z-40 glass-strong rounded-3xl p-4 lg:hidden border border-white/20 bg-[#090E1A]/95 shadow-2xl"
+            className="fixed top-20 left-4 right-4 z-40 glass-strong rounded-panel p-4 lg:hidden border border-neura-line bg-neura-deep/95 shadow-2xl"
           >
             <div className="flex flex-col gap-1.5">
               {navLinks.map((link) => {
@@ -180,10 +182,10 @@ export function Navbar() {
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all",
+                      "flex items-center gap-3 px-4 py-3 rounded-panel text-sm font-semibold transition-all",
                       isActive
                         ? "bg-neura-cyan/20 text-neura-cyan border border-neura-cyan/40"
-                        : "text-slate-300 hover:text-white hover:bg-white/5"
+                        : "text-neura-muted hover:text-white hover:bg-neura-raised"
                     )}
                   >
                     <link.icon className="w-4 h-4" />
@@ -191,13 +193,13 @@ export function Navbar() {
                   </Link>
                 )
               })}
-              <div className="pt-3 mt-1 border-t border-white/10 flex items-center justify-between gap-2">
+              <div className="pt-3 mt-1 border-t border-neura-line flex items-center justify-between gap-2">
                 {user ? (
                   <>
                     <Link
                       href="/dashboard"
                       onClick={() => setOpen(false)}
-                      className="flex items-center gap-1.5 px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-xs font-bold font-mono text-amber-400"
+                      className="flex items-center gap-1.5 px-4 py-2 bg-neura-amber/10 border border-neura-amber/30 rounded-panel text-xs font-bold font-mono text-neura-amber"
                     >
                       <Sparkles className="w-4 h-4" />
                       {user.xp} XP
@@ -207,14 +209,14 @@ export function Navbar() {
                         setOpen(false)
                         handleLogout()
                       }}
-                      className="flex-1 py-2 text-xs font-bold text-red-300 bg-red-500/20 border border-red-500/30 rounded-2xl flex items-center justify-center gap-1.5"
+                      className="flex-1 py-2 text-xs font-bold text-red-300 bg-red-500/20 border border-red-500/30 rounded-panel flex items-center justify-center gap-1.5"
                     >
                       <LogOut className="w-4 h-4" /> Keluar
                     </button>
                   </>
                 ) : (
                   <Link href="/masuk" onClick={() => setOpen(false)} className="w-full">
-                    <button className="w-full py-2.5 text-xs font-bold text-neura-deep bg-neura-cyan rounded-2xl flex items-center justify-center gap-2">
+                    <button className="w-full py-2.5 text-xs font-bold text-neura-deep bg-neura-cyan rounded-panel flex items-center justify-center gap-2">
                       <User className="w-4 h-4" /> Masuk ke Akun
                     </button>
                   </Link>

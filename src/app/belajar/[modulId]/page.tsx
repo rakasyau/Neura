@@ -49,7 +49,7 @@ export default function ModuleDetailPage() {
 
             <GlassCard className="p-6 md:p-8">
               <div className="flex items-start gap-4 mb-4">
-                <div className="text-xs text-neura-muted font-medium">Modul {String(mod.number).padStart(2, "0")}</div>
+                <div className="mono-label">MODUL {String(mod.number).padStart(2, "0")}</div>
               </div>
               <h1 className="text-3xl md:text-4xl font-bold font-display mb-3">{mod.title}</h1>
               <p className="text-neura-muted mb-6 max-w-2xl">{mod.description}</p>
@@ -65,8 +65,8 @@ export default function ModuleDetailPage() {
                     <span className="text-neura-muted">Progress</span>
                     <span className="text-neura-cyan font-mono">{chapterProgress}/{mod.chapters.length} bab</span>
                   </div>
-                  <div className="w-full h-2 bg-black/50 rounded-full overflow-hidden border border-white/10">
-                    <div className="h-full bg-gradient-to-r from-neura-cyan to-indigo-500 rounded-full transition-all" style={{ width: `${progressPercent}%` }} />
+                  <div className="w-full h-2 bg-neura-raised border border-neura-line rounded-full overflow-hidden">
+                    <div className="h-full bg-neura-cyan rounded-full transition-all" style={{ width: `${progressPercent}%` }} />
                   </div>
                 </div>
               )}
@@ -85,13 +85,13 @@ export default function ModuleDetailPage() {
                 >
                   <button
                     onClick={() => setActiveChapter(ch.id)}
-                    className="w-full text-left glass rounded-[20px] p-5 glass-hover cursor-pointer group transition-all"
+                    className="w-full text-left glass rounded-panel p-5 glass-hover cursor-pointer group transition-all"
                   >
                     <div className="flex items-center gap-4">
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all ${
                         isCompleted
-                          ? "bg-neura-cyan/20 text-neura-cyan"
-                          : "bg-white/5 text-neura-muted group-hover:bg-neura-cyan/10 group-hover:text-neura-cyan"
+                          ? "bg-neura-panel border border-neura-line text-neura-cyan"
+                          : "bg-neura-panel border border-neura-line text-neura-muted group-hover:text-neura-cyan group-hover:border-neura-cyan/40"
                       }`}>
                         {isCompleted ? <CheckCircle2 className="w-5 h-5" /> : <span className="text-sm font-mono font-bold">{String(i + 1).padStart(2, "0")}</span>}
                       </div>

@@ -33,16 +33,16 @@ function CodeBlockView({ language, code }: { language: string; code: string }) {
   }
 
   return (
-    <div className="my-3 rounded-2xl overflow-hidden border border-white/15 bg-[#090E1A] shadow-xl">
+    <div className="my-3 rounded-panel overflow-hidden border border-neura-line bg-neura-deep shadow-xl">
       {/* Code Header Bar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-black/70 border-b border-white/10 text-xs font-mono">
+      <div className="flex items-center justify-between px-4 py-2 bg-neura-deep/85 border-b border-neura-line text-xs font-mono">
         <div className="flex items-center gap-2 text-neura-cyan">
           <Terminal className="w-3.5 h-3.5 text-neura-cyan" />
           <span className="lowercase font-bold tracking-wide">{language || "code"}</span>
         </div>
         <button
           onClick={handleCopyCode}
-          className="flex items-center gap-1.5 px-2.5 py-1 glass rounded-xl text-[11px] text-neura-muted hover:text-white transition-all border border-white/10"
+          className="flex items-center gap-1.5 px-2.5 py-1 glass rounded-xl text-[11px] text-neura-muted hover:text-white transition-all border border-neura-line"
         >
           {copied ? (
             <>
@@ -59,7 +59,7 @@ function CodeBlockView({ language, code }: { language: string; code: string }) {
       </div>
 
       {/* Code Area */}
-      <pre className="p-4 font-mono text-xs sm:text-xs text-neura-cyan leading-relaxed overflow-x-auto bg-black/50 selection:bg-neura-cyan/30">
+      <pre className="p-4 font-mono text-xs sm:text-xs text-neura-cyan leading-relaxed overflow-x-auto bg-neura-deep/70 selection:bg-neura-cyan/30">
         <code>{code}</code>
       </pre>
     </div>
@@ -82,7 +82,7 @@ function renderInlineText(text: string): React.ReactNode[] {
       return (
         <code
           key={i}
-          className="px-1.5 py-0.5 bg-black/60 text-neura-amber font-mono text-[11px] rounded border border-white/10 mx-0.5 inline-block"
+          className="px-1.5 py-0.5 bg-neura-deep/80 text-neura-amber font-mono text-[11px] rounded border border-neura-line mx-0.5 inline-block"
         >
           {token.slice(1, -1)}
         </code>
@@ -272,12 +272,12 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
   }
 
   return (
-    <div className="glass rounded-3xl border border-white/15 shadow-2xl flex flex-col h-[650px] overflow-hidden bg-neura-deep/80">
+    <div className="glass rounded-panel border border-neura-line shadow-2xl flex flex-col h-[650px] overflow-hidden bg-neura-deep/80">
       {/* Header Chat */}
-      <div className="p-4 px-6 border-b border-white/10 flex items-center justify-between bg-black/40">
+      <div className="p-4 px-6 border-b border-neura-line flex items-center justify-between bg-neura-deep/60">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-neura-cyan to-indigo-500 flex items-center justify-center text-neura-deep font-bold shadow-lg shadow-neura-cyan/20">
+            <div className="w-10 h-10 rounded-panel bg-neura-cyan flex items-center justify-center text-neura-deep font-bold">
               <Bot className="w-5 h-5 stroke-[2.5]" />
             </div>
             <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-[#090E1A]" />
@@ -322,10 +322,10 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
             )}
 
             <div
-              className={`relative group max-w-[85%] sm:max-w-[78%] p-4 rounded-2xl text-xs sm:text-sm leading-relaxed ${
+              className={`relative group max-w-[85%] sm:max-w-[78%] p-4 rounded-panel text-xs sm:text-sm leading-relaxed ${
                 m.role === "user"
-                  ? "bg-gradient-to-r from-neura-cyan to-teal-400 text-neura-deep font-medium rounded-tr-none shadow-lg shadow-neura-cyan/15"
-                  : "glass border border-white/10 text-white rounded-tl-none bg-black/40"
+                  ? "bg-neura-cyan text-neura-deep font-medium rounded-tr-none"
+                                    : "glass border border-neura-line text-white rounded-tl-none bg-neura-panel/40"
               }`}
             >
               {m.role === "assistant" && (
@@ -347,7 +347,7 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
             </div>
 
             {m.role === "user" && (
-              <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center shrink-0 mt-1">
+              <div className="w-8 h-8 rounded-xl bg-neura-amber/20 border border-neura-amber/30 text-neura-amber flex items-center justify-center shrink-0 mt-1">
                 <User className="w-4 h-4" />
               </div>
             )}
@@ -359,7 +359,7 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
             <div className="w-8 h-8 rounded-xl bg-neura-cyan/20 border border-neura-cyan/30 text-neura-cyan flex items-center justify-center shrink-0">
               <Bot className="w-4 h-4" />
             </div>
-            <div className="glass p-4 rounded-2xl rounded-tl-none border border-white/10 bg-black/40 flex items-center gap-2">
+            <div className="glass p-4 rounded-panel rounded-tl-none border border-neura-line bg-neura-deep/60 flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-neura-cyan animate-ping" />
               <span className="text-xs text-neura-muted">Neura AI sedang berpikir & menyusun jawaban...</span>
             </div>
@@ -371,12 +371,12 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
 
       {/* Suggested Quick Prompts */}
       {messages.length < 3 && (
-        <div className="px-4 sm:px-6 py-2 flex gap-2 overflow-x-auto no-scrollbar border-t border-white/5">
+        <div className="px-4 sm:px-6 py-2 flex gap-2 overflow-x-auto no-scrollbar border-t border-neura-line/50">
           {suggestedPrompts.map((prompt, pIdx) => (
             <button
               key={pIdx}
               onClick={() => handleSend(prompt)}
-              className="px-3 py-1.5 glass rounded-xl text-xs text-neura-muted hover:text-neura-cyan hover:border-neura-cyan/40 transition-all shrink-0 border border-white/10"
+              className="px-3 py-1.5 glass rounded-xl text-xs text-neura-muted hover:text-neura-cyan hover:border-neura-cyan/40 transition-all shrink-0 border border-neura-line"
             >
               {prompt}
             </button>
@@ -385,7 +385,7 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
       )}
 
       {/* Input Form */}
-      <div className="p-4 px-6 border-t border-white/10 bg-black/40">
+      <div className="p-4 px-6 border-t border-neura-line bg-neura-deep/60">
         <form
           onSubmit={(e) => {
             e.preventDefault()
@@ -399,12 +399,13 @@ export function AIChatWidget({ userName = "Pembelajar ML" }: AIChatWidgetProps) 
             onChange={(e) => setInput(e.target.value)}
             placeholder="Tanyakan konsep Machine Learning, kode Python, atau teori..."
             disabled={loading}
-            className="flex-1 px-4 py-3 bg-black/60 border border-white/15 rounded-2xl text-xs sm:text-sm text-white placeholder-neura-muted focus:outline-none focus:border-neura-cyan/50 transition-all"
+            className="flex-1 px-4 py-3 bg-neura-deep/80 border border-neura-line rounded-panel text-xs sm:text-sm text-white placeholder-neura-muted focus:outline-none focus:border-neura-cyan/50 transition-all"
           />
           <button
             type="submit"
             disabled={loading || !input.trim()}
-            className="p-3 bg-neura-cyan text-neura-deep rounded-2xl font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50 shadow-lg shadow-neura-cyan/20 shrink-0"
+            aria-label="Kirim pesan"
+            className="p-3 bg-neura-cyan text-neura-deep rounded-panel font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50 shrink-0"
           >
             <Send className="w-4 h-4 fill-current" />
           </button>

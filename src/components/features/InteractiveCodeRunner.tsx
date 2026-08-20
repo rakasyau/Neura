@@ -156,7 +156,7 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
   return (
     <div className="space-y-4">
       {/* Editor */}
-      <div className="glass p-4 rounded-3xl border border-white/10">
+      <div className="glass p-4 rounded-panel border border-neura-line">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
@@ -177,7 +177,7 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
             <button
               onClick={handleRunCode}
               disabled={isRunning}
-              className="flex items-center gap-1.5 px-4 py-1.5 bg-neura-cyan text-neura-deep rounded-lg text-xs font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50 shadow-lg shadow-neura-cyan/20 shrink-0"
+              className="flex items-center gap-1.5 px-4 py-1.5 bg-neura-cyan text-neura-deep rounded-lg text-xs font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50 shrink-0"
             >
               {isRunning ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5 fill-current" />}
               {isRunning ? "Menjalankan..." : "Jalankan Kode"}
@@ -189,17 +189,17 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
           value={code}
           onChange={(e) => setCode(e.target.value)}
           spellCheck={false}
-          className="w-full h-[280px] p-4 bg-black/60 rounded-2xl font-mono text-xs text-neura-cyan leading-relaxed focus:outline-none border border-white/10 resize-none"
+          className="w-full h-[280px] p-4 bg-neura-deep/80 rounded-panel font-mono text-xs text-neura-cyan leading-relaxed focus:outline-none border border-neura-line resize-none"
         />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4">
         {/* Terminal */}
-        <div className="glass p-4 rounded-3xl border border-white/10 flex flex-col min-h-[280px]">
-          <div className="flex items-center gap-2 text-xs font-bold text-white mb-2 pb-2 border-b border-white/10">
+        <div className="glass p-4 rounded-panel border border-neura-line flex flex-col min-h-[280px]">
+          <div className="flex items-center gap-2 text-xs font-bold text-white mb-2 pb-2 border-b border-neura-line">
             <Terminal className="w-4 h-4 text-neura-amber" /> Terminal Output Log
           </div>
-          <div className="flex-1 overflow-y-auto font-mono text-[11px] text-neura-muted space-y-0.5 pr-1 bg-black/40 p-3 rounded-xl max-h-[360px]">
+          <div className="flex-1 overflow-y-auto font-mono text-[11px] text-neura-muted space-y-0.5 pr-1 bg-neura-deep/60 p-3 rounded-xl max-h-[360px]">
             {logs.length === 0 ? (
               <span className="text-neura-muted/50 italic">
                 Tekan &quot;Jalankan Kode&quot; untuk mengeksekusi model...
@@ -228,8 +228,8 @@ export function InteractiveCodeRunner({ initialCode, algoId = "general" }: Props
         </div>
 
         {/* Grafik hasil uji (real, dari model.predict) */}
-        <div className="glass p-4 rounded-3xl border border-white/10 flex flex-col min-h-[280px]">
-          <div className="flex items-center gap-2 text-xs font-bold text-white mb-2 pb-2 border-b border-white/10">
+        <div className="glass p-4 rounded-panel border border-neura-line flex flex-col min-h-[280px]">
+          <div className="flex items-center gap-2 text-xs font-bold text-white mb-2 pb-2 border-b border-neura-line">
             <BarChart2 className="w-4 h-4 text-neura-cyan" /> Grafik Hasil {algoLabel(algoId)}
           </div>
           <div className="flex-1 w-full pt-1">

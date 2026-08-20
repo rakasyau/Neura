@@ -141,7 +141,7 @@ export function RandomForestSimulator() {
     <div className="space-y-6">
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Main Forest Ensemble View */}
-        <div className="lg:col-span-2 glass p-5 rounded-3xl border border-white/10 flex flex-col justify-between">
+        <div className="lg:col-span-2 glass p-5 rounded-panel border border-neura-line flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -179,7 +179,7 @@ export function RandomForestSimulator() {
                   key={v.treeId}
                   animate={isSimulating ? { scale: [1, 1.04, 1] } : {}}
                   transition={{ duration: 0.4, delay: v.treeId * 0.1 }}
-                  className={`p-3.5 rounded-2xl border transition-all text-xs flex flex-col justify-between ${
+                  className={`p-3.5 rounded-panel border transition-all text-xs flex flex-col justify-between ${
                     v.vote === "Ya"
                       ? "bg-green-500/10 border-green-500/30 text-green-300"
                       : "bg-red-500/10 border-red-500/30 text-red-300"
@@ -211,7 +211,7 @@ export function RandomForestSimulator() {
           </div>
 
           {/* Aggregation & Action Footer */}
-          <div className="mt-4 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+          <div className="mt-4 pt-4 border-t border-neura-line flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5 text-xs">
                 <span className="w-2.5 h-2.5 rounded-full bg-green-400" />
@@ -237,7 +237,7 @@ export function RandomForestSimulator() {
               <button
                 onClick={handleSimulate}
                 disabled={isSimulating}
-                className="flex items-center gap-2 px-4 py-2 bg-neura-cyan text-neura-deep rounded-2xl text-xs font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50 shadow-lg shadow-neura-cyan/20"
+                className="flex items-center gap-2 px-4 py-2 bg-neura-cyan text-neura-deep rounded-panel text-xs font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50"
               >
                 <Vote className="w-4 h-4" /> {isSimulating ? "Voting..." : "Jalankan Voting Ensemble"}
               </button>
@@ -246,7 +246,7 @@ export function RandomForestSimulator() {
         </div>
 
         {/* Input Parameters & Final Result Panel */}
-        <div className="glass p-5 rounded-3xl border border-white/10 flex flex-col justify-between space-y-4">
+        <div className="glass p-5 rounded-panel border border-neura-line flex flex-col justify-between space-y-4">
           <div>
             <h4 className="font-bold font-display text-base text-white mb-3 flex items-center gap-2">
               <Sliders className="w-4 h-4 text-neura-amber" /> Input Sample Uji
@@ -306,7 +306,7 @@ export function RandomForestSimulator() {
           </div>
 
           {/* Final Ensemble Result Display */}
-          <div className="p-4 glass rounded-2xl border-l-4 border-neura-cyan bg-white/5 space-y-2">
+          <div className="p-4 glass rounded-panel border-l border-neura-cyan bg-neura-raised space-y-2">
             <span className="text-[10px] uppercase tracking-wider text-neura-cyan font-bold block">
               Hasil Akhir Random Forest (Majority Vote)
             </span>

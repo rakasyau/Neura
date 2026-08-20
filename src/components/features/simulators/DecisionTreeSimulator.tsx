@@ -54,16 +54,16 @@ export function DecisionTreeSimulator() {
     <div className="space-y-6">
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Tree Diagram View */}
-        <div className="lg:col-span-2 glass p-5 rounded-3xl border border-white/10 flex flex-col justify-between">
+        <div className="lg:col-span-2 glass p-5 rounded-panel border border-neura-line flex flex-col justify-between">
           <div>
             <h3 className="font-bold font-display text-lg text-white flex items-center gap-2 mb-4">
               <GitBranch className="w-5 h-5 text-neura-cyan" /> Simulasi Percabangan Decision Tree
             </h3>
 
             {/* Tree Branch Diagram */}
-            <div className="bg-black/40 p-6 rounded-2xl border border-white/10 flex flex-col items-center gap-4">
+            <div className="bg-neura-deep/60 p-6 rounded-panel border border-neura-line flex flex-col items-center gap-4">
               {/* Root Node */}
-              <div className="p-3 px-5 glass rounded-2xl border border-neura-cyan/40 text-center shadow-lg">
+              <div className="p-3 px-5 glass rounded-panel border border-neura-cyan/40 text-center shadow-lg">
                 <span className="text-xs text-neura-muted block">Split 1 (Gini)</span>
                 <span className="text-sm font-bold text-neura-cyan">Apakah Cuaca == Cerah?</span>
               </div>
@@ -72,7 +72,7 @@ export function DecisionTreeSimulator() {
               <div className="flex justify-center gap-6 w-full max-w-md">
                 <button
                   onClick={() => { setSelectedCuaca("Cerah"); setApplySuhuFilter(false) }}
-                  className={`flex-1 p-3 rounded-2xl border text-xs font-bold transition-all ${
+                  className={`flex-1 p-3 rounded-panel border text-xs font-bold transition-all ${
                     selectedCuaca === "Cerah" ? "bg-neura-cyan text-neura-deep border-neura-cyan shadow-lg" : "glass text-neura-muted hover:text-white"
                   }`}
                 >
@@ -80,7 +80,7 @@ export function DecisionTreeSimulator() {
                 </button>
                 <button
                   onClick={() => { setSelectedCuaca("Hujan"); setApplySuhuFilter(false) }}
-                  className={`flex-1 p-3 rounded-2xl border text-xs font-bold transition-all ${
+                  className={`flex-1 p-3 rounded-panel border text-xs font-bold transition-all ${
                     selectedCuaca === "Hujan" ? "bg-neura-amber text-neura-deep border-neura-amber shadow-lg" : "glass text-neura-muted hover:text-white"
                   }`}
                 >
@@ -95,7 +95,7 @@ export function DecisionTreeSimulator() {
                   animate={{ opacity: 1, y: 0 }}
                   className="w-full max-w-md space-y-3"
                 >
-                  <div className="p-3 px-5 glass rounded-2xl border border-neura-amber/40 text-center shadow-lg">
+                  <div className="p-3 px-5 glass rounded-panel border border-neura-amber/40 text-center shadow-lg">
                     <span className="text-xs text-neura-muted block">Split 2</span>
                     <span className="text-sm font-bold text-neura-amber">Apakah Suhu ≥ {suhuCutoff}°C?</span>
                   </div>
@@ -115,7 +115,7 @@ export function DecisionTreeSimulator() {
 
                   <button
                     onClick={() => setApplySuhuFilter(true)}
-                    className={`w-full p-2.5 rounded-2xl border text-xs font-bold transition-all ${
+                    className={`w-full p-2.5 rounded-panel border text-xs font-bold transition-all ${
                       applySuhuFilter
                         ? "bg-green-500/20 border-green-500/40 text-green-300"
                         : "glass text-neura-muted hover:text-white hover:border-neura-amber/40"
@@ -127,7 +127,7 @@ export function DecisionTreeSimulator() {
               )}
 
               {/* Status Bar */}
-              <div className="w-full pt-3 border-t border-white/10 flex justify-between items-center px-2">
+              <div className="w-full pt-3 border-t border-neura-line flex justify-between items-center px-2">
                 <div className="text-xs text-neura-muted space-x-3">
                   <span>Filter: <strong className="text-white">{selectedCuaca}</strong></span>
                   {applySuhuFilter && <span>| Suhu ≥ <strong className="text-neura-amber">{suhuCutoff}°C</strong></span>}
@@ -145,7 +145,7 @@ export function DecisionTreeSimulator() {
         </div>
 
         {/* Data Sample Table */}
-        <div className="glass p-5 rounded-3xl border border-white/10 flex flex-col justify-between">
+        <div className="glass p-5 rounded-panel border border-neura-line flex flex-col justify-between">
           <div>
             <h4 className="font-bold font-display text-base text-white mb-3 flex items-center gap-2">
               <Filter className="w-4 h-4 text-neura-amber" /> Hasil Sub-Dataset ({filtered.length} Sampel)
@@ -171,7 +171,7 @@ export function DecisionTreeSimulator() {
               )}
             </div>
 
-            <div className="mt-5 p-3.5 glass rounded-2xl border-l-2 border-neura-amber text-xs text-neura-muted">
+            <div className="mt-5 p-3.5 glass rounded-panel border-l border-neura-amber text-xs text-neura-muted">
               🌲 Decision Tree memecah dataset menjadi subset yang lebih murni (Gini Impurity rendah) pada setiap percabangan. Coba geser threshold suhu untuk melihat bagaimana pemisahan berubah!
             </div>
           </div>

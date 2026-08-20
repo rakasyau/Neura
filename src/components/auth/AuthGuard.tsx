@@ -53,8 +53,8 @@ export function AuthGuard({ children }: AuthGuardProps) {
       <div className="min-h-screen pt-32 pb-24 px-4 flex items-center justify-center relative z-10">
         <div className="w-full max-w-lg">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-            <GlassCard className="p-8 sm:p-10 border border-white/15 text-center shadow-2xl relative overflow-hidden">
-              <div className="w-16 h-16 rounded-3xl bg-neura-amber/20 border border-neura-amber/40 text-neura-amber flex items-center justify-center mx-auto mb-5 shadow-lg shadow-neura-amber/20">
+            <GlassCard className="p-8 sm:p-10 border border-neura-line text-center shadow-2xl relative overflow-hidden">
+              <div className="w-16 h-16 rounded-panel bg-neura-amber/20 border border-neura-amber/40 text-neura-amber flex items-center justify-center mx-auto mb-5 shadow-lg shadow-neura-amber/20">
                 <Lock className="w-8 h-8 stroke-[2.5]" />
               </div>
               <h1 className="text-2xl sm:text-3xl font-bold font-display text-white mb-3">

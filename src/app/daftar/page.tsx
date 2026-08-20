@@ -150,9 +150,9 @@ function DaftarForm() {
 
   return (
     <>
-      <GlassCard className="p-8 sm:p-10 border border-white/15 shadow-2xl relative overflow-hidden">
+      <GlassCard className="p-8 sm:p-10 relative overflow-hidden">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-3xl bg-neura-cyan/20 border border-neura-cyan/40 text-neura-cyan flex items-center justify-center mx-auto mb-4 shadow-lg shadow-neura-cyan/20">
+          <div className="w-14 h-14 rounded-panel bg-neura-panel border border-neura-line text-neura-cyan flex items-center justify-center mx-auto mb-4">
             <Brain className="w-7 h-7 stroke-[2.5]" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold font-display text-white mb-2">Buat Akun Neura</h1>
@@ -160,14 +160,14 @@ function DaftarForm() {
         </div>
 
         {errorMsg && (
-          <div className="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-start gap-3 text-xs text-red-300">
+          <div className="mb-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30 flex items-start gap-3 text-xs text-red-300">
             <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         {googleLoading ? (
-          <div className="w-full py-3 mb-6 flex items-center justify-center gap-2 glass rounded-2xl text-xs text-neura-muted">
+          <div className="w-full py-3 mb-6 flex items-center justify-center gap-2 glass rounded-lg text-xs text-neura-muted">
             <div className="w-4 h-4 rounded-full border-2 border-neura-cyan border-t-transparent animate-spin" />
             Memproses Google Sign-In...
           </div>
@@ -176,9 +176,9 @@ function DaftarForm() {
         )}
 
         <div className="flex items-center gap-3 mb-6">
-          <div className="flex-1 h-px bg-white/10" />
+          <div className="flex-1 h-px bg-neura-line" />
           <span className="text-[11px] text-neura-muted uppercase tracking-wider">atau dengan email</span>
-          <div className="flex-1 h-px bg-white/10" />
+          <div className="flex-1 h-px bg-neura-line" />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -186,30 +186,30 @@ function DaftarForm() {
             <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider mb-2">Nama Lengkap</label>
             <div className="relative">
               <User className="w-4 h-4 text-neura-muted absolute left-4 top-3.5" />
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama Anda" required className="w-full pl-11 pr-4 py-3 bg-black/50 border border-white/15 rounded-2xl text-xs sm:text-sm text-white placeholder-neura-muted/50 focus:outline-none focus:border-neura-cyan transition-all" />
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama Anda" required className="glass-input pl-11 text-xs sm:text-sm" />
             </div>
           </div>
           <div>
             <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider mb-2">Email</label>
             <div className="relative">
               <Mail className="w-4 h-4 text-neura-muted absolute left-4 top-3.5" />
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="nama@email.com" required className="w-full pl-11 pr-4 py-3 bg-black/50 border border-white/15 rounded-2xl text-xs sm:text-sm text-white placeholder-neura-muted/50 focus:outline-none focus:border-neura-cyan transition-all" />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="nama@email.com" required className="glass-input pl-11 text-xs sm:text-sm" />
             </div>
           </div>
           <div>
             <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider mb-2">Password</label>
             <div className="relative">
               <Lock className="w-4 h-4 text-neura-muted absolute left-4 top-3.5" />
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimal 6 karakter" required minLength={6} className="w-full pl-11 pr-4 py-3 bg-black/50 border border-white/15 rounded-2xl text-xs sm:text-sm text-white placeholder-neura-muted/50 focus:outline-none focus:border-neura-cyan transition-all" />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimal 6 karakter" required minLength={6} className="glass-input pl-11 text-xs sm:text-sm" />
             </div>
           </div>
-          <button type="submit" disabled={loading} className="w-full py-3.5 mt-2 bg-neura-cyan text-neura-deep font-bold rounded-2xl text-xs sm:text-sm hover:bg-neura-cyan/90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-neura-cyan/25 disabled:opacity-50">
+          <button type="submit" disabled={loading} className="w-full py-3.5 mt-2 bg-neura-cyan text-neura-deep font-bold rounded-panel text-xs sm:text-sm hover:bg-neura-cyan/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50">
             {loading ? "Mendaftarkan..." : "Daftar Akun Baru"}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-white/10 text-center text-xs text-neura-muted">
+        <div className="mt-8 pt-6 border-t border-neura-line text-center text-xs text-neura-muted">
           Sudah punya akun?{" "}
           <Link href={`/masuk${redirectTarget ? `?redirect=${encodeURIComponent(redirectTarget)}` : ""}`} className="text-neura-cyan font-bold hover:underline">
             Masuk di Sini

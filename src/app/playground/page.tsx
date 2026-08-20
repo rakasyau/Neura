@@ -124,9 +124,9 @@ print(f"Model ${algo} Selesai! Accuracy: {acc:.2f}")`
     // Fallback informatif untuk algoritma tanpa simulator visual
     const algoInfo = algorithms.find((a) => a.id === selectedAlgo)
     return (
-      <div className="glass p-8 rounded-3xl border border-white/10 text-center space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-neura-amber/10 flex items-center justify-center mx-auto">
-          <Sliders className="w-8 h-8 text-neura-amber" />
+      <div className="glass p-8 rounded-panel border border-neura-line text-center space-y-4">
+        <div className="w-16 h-16 rounded-panel bg-neura-cyan/10 flex items-center justify-center mx-auto">
+          <Sliders className="w-8 h-8 text-neura-cyan" />
         </div>
         <h3 className="text-xl font-bold font-display text-white">
           Simulator Visual untuk {algoInfo?.name || selectedAlgo} belum tersedia
@@ -136,7 +136,7 @@ print(f"Model ${algo} Selesai! Accuracy: {acc:.2f}")`
         </p>
         <button
           onClick={() => setViewMode("code")}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-neura-cyan text-neura-deep rounded-2xl text-xs font-bold hover:bg-neura-cyan/90 transition-all shadow-lg shadow-neura-cyan/20"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-neura-cyan text-neura-deep rounded-panel text-xs font-bold hover:bg-neura-cyan/90 transition-all"
         >
           <Code className="w-4 h-4" /> Beralih ke Code Runner
         </button>
@@ -158,13 +158,13 @@ print(f"Model ${algo} Selesai! Accuracy: {acc:.2f}")`
             </div>
 
             {/* Mode Switcher */}
-            <div className="flex gap-2 p-1.5 glass rounded-2xl w-fit">
+            <div className="flex gap-2 p-1.5 glass rounded-panel w-fit">
               <button
                 onClick={() => setViewMode("visual")}
                 className={cn(
                   "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all",
                   viewMode === "visual"
-                    ? "bg-neura-cyan text-neura-deep shadow-lg shadow-neura-cyan/20"
+                    ? "bg-neura-cyan text-neura-deep"
                     : "text-neura-muted hover:text-white"
                 )}
               >
@@ -175,7 +175,7 @@ print(f"Model ${algo} Selesai! Accuracy: {acc:.2f}")`
                 className={cn(
                   "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all",
                   viewMode === "code"
-                    ? "bg-neura-cyan text-neura-deep shadow-lg shadow-neura-cyan/20"
+                    ? "bg-neura-cyan text-neura-deep"
                     : "text-neura-muted hover:text-white"
                 )}
               >
@@ -191,10 +191,10 @@ print(f"Model ${algo} Selesai! Accuracy: {acc:.2f}")`
                 key={algo.id}
                 onClick={() => setSelectedAlgo(algo.id)}
                 className={cn(
-                  "px-4 py-2 rounded-2xl text-xs font-bold transition-all whitespace-nowrap border shrink-0",
+                  "px-4 py-2 rounded-panel text-xs font-bold transition-all whitespace-nowrap border shrink-0",
                   selectedAlgo === algo.id
                     ? "bg-neura-cyan/20 border-neura-cyan text-neura-cyan"
-                    : "glass border-white/10 text-neura-muted hover:text-white"
+                    : "glass border-neura-line text-neura-muted hover:text-white"
                 )}
               >
                 {algo.name}

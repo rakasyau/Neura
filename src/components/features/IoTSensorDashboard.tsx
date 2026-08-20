@@ -57,22 +57,22 @@ export function IoTSensorDashboard() {
   }, [moisture, temp, ph, npk])
 
   return (
-    <div className="glass p-6 rounded-3xl border border-white/15 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+    <div className="glass p-6 rounded-panel border border-neura-line space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neura-line pb-4">
         <div>
           <span className="text-[10px] font-bold uppercase tracking-wider text-neura-amber flex items-center gap-1.5 mb-1">
             <Sparkles className="w-3.5 h-3.5" /> Dashboard IoT Real-Time (Random Forest Predictor)
           </span>
           <h3 className="text-xl font-bold font-display text-white">Monitoring Perkebunan Kopi</h3>
         </div>
-        <div className={`px-4 py-2 rounded-2xl border text-xs font-bold ${prediction.color}`}>
+        <div className={`px-4 py-2 rounded-panel border text-xs font-bold ${prediction.color}`}>
           Prediksi: {prediction.status}
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Sensor 1: Kelembaban */}
-        <div className="p-4 glass rounded-2xl border border-white/10 space-y-3">
+        <div className="p-4 glass rounded-panel border border-neura-line space-y-3">
           <div className="flex justify-between items-center text-xs">
             <span className="text-neura-muted flex items-center gap-1.5">
               <Droplets className="w-4 h-4 text-neura-cyan" /> Kelembaban
@@ -90,7 +90,7 @@ export function IoTSensorDashboard() {
         </div>
 
         {/* Sensor 2: Suhu Tanah */}
-        <div className="p-4 glass rounded-2xl border border-white/10 space-y-3">
+        <div className="p-4 glass rounded-panel border border-neura-line space-y-3">
           <div className="flex justify-between items-center text-xs">
             <span className="text-neura-muted flex items-center gap-1.5">
               <Thermometer className="w-4 h-4 text-neura-amber" /> Suhu Lahan
@@ -108,7 +108,7 @@ export function IoTSensorDashboard() {
         </div>
 
         {/* Sensor 3: pH Tanah */}
-        <div className="p-4 glass rounded-2xl border border-white/10 space-y-3">
+        <div className="p-4 glass rounded-panel border border-neura-line space-y-3">
           <div className="flex justify-between items-center text-xs">
             <span className="text-neura-muted flex items-center gap-1.5">
               <Activity className="w-4 h-4 text-purple-400" /> pH Tanah
@@ -127,7 +127,7 @@ export function IoTSensorDashboard() {
         </div>
 
         {/* Sensor 4: Kadar NPK */}
-        <div className="p-4 glass rounded-2xl border border-white/10 space-y-3">
+        <div className="p-4 glass rounded-panel border border-neura-line space-y-3">
           <div className="flex justify-between items-center text-xs">
             <span className="text-neura-muted flex items-center gap-1.5">
               <Leaf className="w-4 h-4 text-green-400" /> Kadar NPK
@@ -146,7 +146,7 @@ export function IoTSensorDashboard() {
       </div>
 
       {/* Recommendation Box */}
-      <div className="p-4 glass rounded-2xl border-l-4 border-neura-cyan flex items-start gap-3 bg-white/5">
+      <div className="p-4 glass rounded-panel border-l border-neura-cyan flex items-start gap-3 bg-neura-raised">
         <Sparkles className="w-5 h-5 text-neura-cyan shrink-0 mt-0.5" />
         <div>
           <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-1">Rekomendasi Otomatis Model ML:</h4>

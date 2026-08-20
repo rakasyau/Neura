@@ -49,10 +49,10 @@ export function ToastContainer() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="pointer-events-auto glass-strong p-4 rounded-2xl shadow-2xl border border-white/20 flex items-start gap-3 bg-neura-deep/90 backdrop-blur-xl"
+            className="pointer-events-auto glass-strong p-4 rounded-panel shadow-2xl border border-neura-line flex items-start gap-3 bg-neura-deep/90 backdrop-blur-xl"
           >
             {toast.type === "achievement" ? (
-              <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-neura-amber/20 text-neura-amber flex items-center justify-center shrink-0">
                 <Sparkles className="w-5 h-5 animate-pulse" />
               </div>
             ) : toast.type === "error" ? (

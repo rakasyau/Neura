@@ -72,7 +72,7 @@ export default function StudiKasusPage() {
                 { title: "Robust terhadap Noise", desc: "Data sensor lapangan sering noisy — Random Forest tangguh terhadap outlier." },
                 { title: "Tidak Perlu Scaling", desc: "Data sensor memiliki skala berbeda (suhu 0-40°C, pH 4-9) — RF tidak memerlukan normalisasi." },
               ].map((item) => (
-                <div key={item.title} className="p-4 glass rounded-[16px]">
+                <div key={item.title} className="p-4 glass rounded-panel">
                   <h3 className="font-semibold text-sm mb-2">{item.title}</h3>
                   <p className="text-xs text-neura-muted">{item.desc}</p>
                 </div>

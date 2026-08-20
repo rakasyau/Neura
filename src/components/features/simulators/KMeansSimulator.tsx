@@ -112,7 +112,7 @@ export function KMeansSimulator() {
   return (
     <div className="space-y-6">
       <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 glass p-5 rounded-3xl border border-white/10 flex flex-col justify-between">
+        <div className="lg:col-span-2 glass p-5 rounded-panel border border-neura-line flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-bold font-display text-lg text-white flex items-center gap-2">
@@ -141,7 +141,7 @@ export function KMeansSimulator() {
             </div>
           </div>
 
-          <div className="relative w-full h-[320px] bg-black/40 rounded-2xl border border-white/10 overflow-hidden">
+          <div className="relative w-full h-[320px] bg-neura-deep/60 rounded-panel border border-neura-line overflow-hidden">
             {points.map((p) => {
               const color = p.cluster >= 0 ? CLUSTER_COLORS[p.cluster] : "#9CA3C4"
               return (
@@ -168,36 +168,36 @@ export function KMeansSimulator() {
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
+          <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-neura-line">
             <button
               onClick={assignPoints}
-              className="flex items-center gap-2 px-4 py-2 bg-neura-cyan text-neura-deep rounded-2xl text-xs font-bold hover:bg-neura-cyan/90 transition-all"
+              className="flex items-center gap-2 px-4 py-2 bg-neura-cyan text-neura-deep rounded-panel text-xs font-bold hover:bg-neura-cyan/90 transition-all"
             >
               <Sparkles className="w-4 h-4" /> 1. Kelompokkan Titik
             </button>
             <button
               onClick={updateCentroids}
-              className="flex items-center gap-2 px-4 py-2 bg-neura-amber text-neura-deep rounded-2xl text-xs font-bold hover:bg-neura-amber/90 transition-all"
+              className="flex items-center gap-2 px-4 py-2 bg-neura-amber text-neura-deep rounded-panel text-xs font-bold hover:bg-neura-amber/90 transition-all"
             >
               <Play className="w-4 h-4" /> 2. Pindahkan Centroid
             </button>
             <button
               onClick={() => initCentroids()}
-              className="flex items-center gap-1.5 px-3 py-2 glass rounded-2xl text-xs text-neura-muted hover:text-white transition-all ml-auto"
+              className="flex items-center gap-1.5 px-3 py-2 glass rounded-panel text-xs text-neura-muted hover:text-white transition-all ml-auto"
             >
               <RefreshCw className="w-3.5 h-3.5" /> Acak Ulang
             </button>
           </div>
         </div>
 
-        <div className="glass p-5 rounded-3xl border border-white/10 flex flex-col justify-between">
+        <div className="glass p-5 rounded-panel border border-neura-line flex flex-col justify-between">
           <div>
             <h4 className="font-bold font-display text-base text-white mb-4">Daftar Cluster (K = {kCount})</h4>
             <div className="space-y-3">
               {centroids.map((c) => {
                 const count = points.filter((p) => p.cluster === c.id).length
                 return (
-                  <div key={c.id} className="p-3 glass rounded-2xl flex items-center justify-between">
+                  <div key={c.id} className="p-3 glass rounded-panel flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                       <div className="w-4 h-4 rounded-full" style={{ backgroundColor: c.color }} />
                       <span className="text-xs font-semibold text-white">Cluster {c.id + 1}</span>
@@ -208,7 +208,7 @@ export function KMeansSimulator() {
               })}
             </div>
 
-            <div className="mt-6 p-4 glass rounded-2xl border-l-2 border-neura-amber text-xs text-neura-muted leading-relaxed">
+            <div className="mt-6 p-4 glass rounded-panel border-l border-neura-amber text-xs text-neura-muted leading-relaxed">
               <p className="font-medium text-white mb-1">🎯 Cara Kerja K-Means:</p>
               Klik <strong>1. Kelompokkan Titik</strong> lalu <strong>2. Pindahkan Centroid</strong> berulang kali sampai posisi centroid tidak lagi berpindah!
             </div>

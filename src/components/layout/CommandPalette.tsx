@@ -54,15 +54,15 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/60 backdrop-blur-md">
+      <div role="dialog" aria-modal="true" aria-label="Pencarian perintah" className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-neura-deep/60 backdrop-blur-md">
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -10 }}
-          className="w-full max-w-2xl glass-strong rounded-3xl border border-white/20 shadow-2xl overflow-hidden bg-neura-deep/95"
+          className="w-full max-w-2xl glass-strong rounded-panel border border-neura-line shadow-2xl overflow-hidden bg-neura-deep/95"
         >
           {/* Input Box */}
-          <div className="flex items-center px-5 py-4 border-b border-white/10 gap-3">
+          <div className="flex items-center px-5 py-4 border-b border-neura-line gap-3">
             <Search className="w-5 h-5 text-neura-cyan shrink-0" />
             <input
               type="text"
@@ -72,7 +72,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
               autoFocus
               className="w-full bg-transparent text-sm text-white placeholder-neura-muted focus:outline-none"
             />
-            <button onClick={onClose} className="p-1 glass rounded-lg text-neura-muted hover:text-white">
+            <button onClick={onClose} aria-label="Tutup" className="p-2 glass rounded-lg text-neura-muted hover:text-white">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -90,7 +90,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                     <button
                       key={m.id}
                       onClick={() => handleSelect(`/belajar/${m.id}`)}
-                      className="w-full p-3 rounded-2xl glass glass-hover flex items-center justify-between text-left group"
+                      className="w-full p-3 rounded-panel glass glass-hover flex items-center justify-between text-left group"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-xl bg-neura-cyan/20 text-neura-cyan flex items-center justify-center shrink-0">
@@ -119,7 +119,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                     <button
                       key={a.id}
                       onClick={() => handleSelect(`/algoritma/${a.id}`)}
-                      className="w-full p-3 rounded-2xl glass glass-hover flex items-center justify-between text-left group"
+                      className="w-full p-3 rounded-panel glass glass-hover flex items-center justify-between text-left group"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-xl bg-neura-amber/20 text-neura-amber flex items-center justify-center shrink-0">
@@ -148,7 +148,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                     <button
                       key={g.term}
                       onClick={() => handleSelect("/glossary")}
-                      className="w-full p-3 rounded-2xl glass glass-hover flex items-center justify-between text-left group"
+                      className="w-full p-3 rounded-panel glass glass-hover flex items-center justify-between text-left group"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center shrink-0">

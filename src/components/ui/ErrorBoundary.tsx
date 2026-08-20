@@ -36,13 +36,13 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex gap-3 justify-center">
               <button
                 onClick={() => window.location.reload()}
-                className="px-6 py-3 bg-neura-cyan text-neura-deep font-bold rounded-2xl text-sm hover:bg-neura-cyan/90 transition-all"
+                className="px-6 py-3 bg-neura-cyan text-neura-deep font-bold rounded-panel text-sm hover:bg-neura-cyan/90 transition-all"
               >
                 Muat Ulang Halaman
               </button>
               <Link
                 href="/"
-                className="px-6 py-3 glass text-white font-bold rounded-2xl text-sm hover:bg-white/10 transition-all"
+                className="px-6 py-3 glass text-white font-bold rounded-panel text-sm hover:bg-neura-raised transition-all"
               >
                 Kembali ke Beranda
               </Link>

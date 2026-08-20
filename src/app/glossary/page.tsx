@@ -23,8 +23,9 @@ export default function GlossaryPage() {
   return (
     <div className="min-h-screen pt-28 pb-24 px-4">
       <div className="max-w-4xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold font-display mb-4">Glossary</h1>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
+          <p className="mono-label mb-3">REFERENSI CEPAT</p>
+          <h1 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Glossary</h1>
           <p className="text-neura-muted text-lg">Kamus istilah Machine Learning — dari A hingga Z.</p>
         </motion.div>
 
@@ -36,12 +37,12 @@ export default function GlossaryPage() {
             placeholder="Cari istilah..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 glass rounded-[20px] text-sm text-neura-text placeholder-neura-muted/50 focus:outline-none focus:border-neura-cyan/50 transition-colors"
+            className="w-full pl-12 pr-4 py-3 glass-input"
           />
         </div>
 
         {/* Category Filter */}
-        <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
+        <div className="flex gap-2 mb-8 overflow-x-auto pb-2 no-scrollbar">
           <button
             onClick={() => setActiveCategory("Semua")}
             className={cn(
@@ -78,8 +79,8 @@ export default function GlossaryPage() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold font-display text-base">{term.term}</h3>
-                      <span className="text-xs px-1.5 py-0.5 glass rounded text-neura-muted">{term.category}</span>
+                      <h3 className="font-bold font-display text-base text-white">{term.term}</h3>
+                      <span className="font-mono text-[11px] px-1.5 py-0.5 glass rounded text-neura-cyan">{term.category}</span>
                     </div>
                     <p className="text-sm text-neura-muted">{term.definition}</p>
                   </div>

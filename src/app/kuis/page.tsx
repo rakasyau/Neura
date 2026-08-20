@@ -100,9 +100,9 @@ export default function KuisPage() {
                 <button
                   key={m.id}
                   onClick={() => switchModule(m.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-bold transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-panel text-xs font-bold transition-all ${
                     isActive
-                      ? "bg-neura-cyan text-neura-deep shadow-lg shadow-neura-cyan/25"
+                      ? "bg-neura-cyan text-neura-deep"
                       : "glass text-neura-muted hover:text-white"
                   }`}
                 >
@@ -157,7 +157,7 @@ export default function KuisPage() {
                 exit={{ opacity: 0, x: -20 }}
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="flex-1 h-1 glass rounded-full overflow-hidden">
+                  <div className="flex-1 h-1 glass rounded-full overflow-hidden border border-neura-line">
                     <div className="h-full bg-neura-cyan rounded-full transition-all duration-500" style={{ width: `${progress}%` }} />
                   </div>
                   <span className="text-sm text-neura-muted shrink-0">
@@ -173,15 +173,15 @@ export default function KuisPage() {
                         key={i}
                         onClick={() => handleAnswer(i)}
                         disabled={selected !== undefined}
-                        className={`w-full text-left p-4 rounded-[16px] text-sm transition-all ${
+                        className={`w-full text-left p-4 rounded-panel text-sm transition-all ${
                           selected === undefined
                             ? "glass glass-hover border border-transparent"
                             : selected === i && i === question.correctIndex
-                            ? "bg-green-500/20 border border-green-500/40"
+                            ? "bg-neura-cyan/20 border border-neura-cyan/50"
                             : selected === i && i !== question.correctIndex
-                            ? "bg-red-500/20 border border-red-500/40"
+                            ? "bg-red-500/20 border border-red-500/50"
                             : selected !== undefined && i === question.correctIndex && selected !== i
-                            ? "bg-green-500/10 border border-green-500/30"
+                            ? "bg-neura-cyan/10 border border-neura-cyan/30"
                             : "border border-transparent"
                         }`}
                       >
@@ -189,10 +189,10 @@ export default function KuisPage() {
                           <span
                             className={`w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 ${
                               selected === i && i === question.correctIndex
-                                ? "bg-green-500 text-white"
+                                ? "bg-neura-cyan text-neura-deep"
                                 : selected === i
                                 ? "bg-red-500 text-white"
-                                : "bg-white/10"
+                                : "bg-neura-raised text-neura-muted"
                             }`}
                           >
                             {selected === i && i === question.correctIndex ? (
@@ -213,7 +213,7 @@ export default function KuisPage() {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="mt-6 p-4 glass rounded-[16px] border-l-2 border-neura-cyan"
+                      className="mt-6 p-4 glass rounded-panel border-l border-neura-cyan"
                     >
                       <div className="flex items-center gap-2 text-sm text-neura-cyan font-medium mb-1">
                         {isCorrect ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}

@@ -41,7 +41,7 @@ export default function AlgorithmDetailPage() {
             <GlassCard className="p-6 md:p-8 mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-xs font-mono text-neura-muted">#{String(algo.number).padStart(2, "0")}</span>
-                <span className="text-[11px] px-2.5 py-0.5 glass rounded-full text-neura-cyan font-medium border border-neura-cyan/20">
+                <span className="font-mono text-[11px] px-2.5 py-0.5 glass rounded-full text-neura-cyan border border-neura-line">
                   {algo.category}
                 </span>
               </div>
@@ -50,8 +50,8 @@ export default function AlgorithmDetailPage() {
 
               <div className="flex flex-wrap gap-4 text-xs">
                 <span className="flex items-center gap-1.5 text-neura-muted"><BarChart className="w-3.5 h-3.5 text-neura-cyan" /> {algo.taskType}</span>
-                <span className="flex items-center gap-1.5 text-neura-muted"><Clock className="w-3.5 h-3.5 text-amber-400" /> {algo.complexity}</span>
-                <span className="flex items-center gap-1.5 text-neura-muted"><Briefcase className="w-3.5 h-3.5 text-green-400" /> {algo.minData}</span>
+                <span className="flex items-center gap-1.5 text-neura-muted"><Clock className="w-3.5 h-3.5 text-neura-cyan" /> {algo.complexity}</span>
+                <span className="flex items-center gap-1.5 text-neura-muted"><Briefcase className="w-3.5 h-3.5 text-neura-cyan" /> {algo.minData}</span>
               </div>
             </GlassCard>
 
@@ -83,16 +83,16 @@ export default function AlgorithmDetailPage() {
               <h2 className="font-bold text-white mb-4 flex items-center gap-2"><Briefcase className="w-5 h-5 text-neura-cyan" /> Contoh Penerapan</h2>
               <div className="grid md:grid-cols-2 gap-3">
                 {algo.applications.map((app, i) => (
-                  <div key={i} className="flex items-start gap-2 text-sm text-neura-muted p-3 glass rounded-2xl">
-                    <span className="w-5 h-5 rounded-full bg-neura-cyan/10 text-neura-cyan flex items-center justify-center text-xs shrink-0 mt-0.5">{i + 1}</span>
+                  <div key={i} className="flex items-start gap-2 text-sm text-neura-muted p-3 glass rounded-panel">
+                    <span className="w-5 h-5 rounded-full bg-neura-panel border border-neura-line text-neura-cyan flex items-center justify-center text-xs shrink-0 mt-0.5">{i + 1}</span>
                     {app}
                   </div>
                 ))}
               </div>
             </GlassCard>
 
-            <GlassCard glow className="p-6 mt-6">
-              <h2 className="font-bold text-white mb-2 font-display text-lg">💡 Analogi</h2>
+            <GlassCard className="p-6 mt-6">
+              <h2 className="font-bold text-white mb-2 font-display text-lg">Analogi</h2>
               <p className="text-sm text-neura-muted leading-relaxed">{algo.analogy}</p>
             </GlassCard>
           </motion.div>

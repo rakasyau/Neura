@@ -70,17 +70,17 @@ export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalPro
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md">
+      <div role="dialog" aria-modal="true" aria-label="Isi bab pembelajaran" className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-neura-deep/85 backdrop-blur-md">
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="w-full max-w-3xl max-h-[92vh] sm:max-h-[85vh] h-full glass-strong rounded-3xl border border-white/20 shadow-2xl flex flex-col overflow-hidden bg-neura-deep/95"
+          className="w-full max-w-3xl max-h-[92vh] sm:max-h-[85vh] h-full glass-strong rounded-panel border border-neura-line shadow-2xl flex flex-col overflow-hidden bg-neura-deep/95"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-white/10">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-neura-line">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-neura-cyan/20 text-neura-cyan flex items-center justify-center font-bold shrink-0">
+              <div className="w-10 h-10 rounded-panel bg-neura-cyan/20 text-neura-cyan flex items-center justify-center font-bold shrink-0">
                 <BookOpen className="w-5 h-5" />
               </div>
               <div className="min-w-0">
@@ -88,14 +88,14 @@ export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalPro
                 <h3 className="text-base sm:text-lg font-bold font-display text-white truncate">{lesson.title}</h3>
               </div>
             </div>
-            <button onClick={onClose} className="p-2 glass rounded-xl text-neura-muted hover:text-white transition-all shrink-0">
+            <button onClick={onClose} aria-label="Tutup" className="p-2 glass rounded-xl text-neura-muted hover:text-white transition-all shrink-0">
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Content Body */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6">
-            <p className="text-sm text-neura-muted italic leading-relaxed border-l-2 border-neura-cyan pl-4 bg-white/5 py-2 rounded-r-xl">
+            <p className="text-sm text-neura-muted italic leading-relaxed border-l border-neura-cyan pl-4 bg-neura-raised py-2 rounded-r-xl">
               {lesson.summary}
             </p>
 
@@ -109,21 +109,21 @@ export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalPro
               }
               if (block.type === "highlight") {
                 return (
-                  <div key={idx} className="p-4 glass rounded-2xl border-l-4 border-neura-amber text-xs text-white leading-relaxed font-medium bg-neura-amber/10 whitespace-pre-wrap">
+                  <div key={idx} className="p-4 glass rounded-panel border-l border-neura-amber text-xs text-white leading-relaxed font-medium bg-neura-amber/10 whitespace-pre-wrap">
                     {block.text}
                   </div>
                 )
               }
               if (block.type === "formula") {
                 return (
-                  <div key={idx} className="p-4 bg-black/40 rounded-2xl border border-white/10 text-center">
+                  <div key={idx} className="p-4 bg-neura-deep/60 rounded-panel border border-neura-line text-center">
                     <code className="text-sm text-neura-amber font-mono">{block.text}</code>
                   </div>
                 )
               }
               if (block.type === "code") {
                 return (
-                  <pre key={idx} className="p-4 bg-black/60 rounded-2xl font-mono text-xs text-neura-cyan overflow-x-auto border border-white/10">
+                  <pre key={idx} className="p-4 bg-neura-deep/80 rounded-panel font-mono text-xs text-neura-cyan overflow-x-auto border border-neura-line">
                     <code>{block.code}</code>
                   </pre>
                 )
@@ -133,7 +133,7 @@ export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalPro
                 const selectedOpt = quizAnswers[idx] ?? null
                 const quizAnswered = selectedOpt !== null
                 return (
-                  <div key={idx} className="p-5 glass rounded-3xl border border-neura-cyan/30 space-y-4">
+                  <div key={idx} className="p-5 glass rounded-panel border border-neura-cyan/30 space-y-4">
                     <div className="flex items-center gap-2 text-xs font-bold text-neura-cyan">
                       <HelpCircle className="w-4 h-4" /> Uji Pemahaman Cepat
                     </div>
@@ -154,7 +154,7 @@ export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalPro
                             onClick={() => {
                               setQuizAnswers((prev) => ({ ...prev, [idx]: oIdx }))
                             }}
-                            className={`w-full p-3 rounded-2xl border text-xs text-left transition-all flex items-center justify-between disabled:cursor-default ${btnStyle}`}
+                            className={`w-full p-3 rounded-panel border text-xs text-left transition-all flex items-center justify-between disabled:cursor-default ${btnStyle}`}
                           >
                             <span>{opt}</span>
                             {quizAnswered && selectedOpt === oIdx && (
@@ -166,7 +166,7 @@ export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalPro
                     </div>
 
                     {quizAnswered && (
-                      <div className="p-3 bg-white/5 rounded-xl text-xs text-neura-cyan italic">
+                      <div className="p-3 bg-neura-raised rounded-xl text-xs text-neura-cyan italic">
                         {q.exp}
                       </div>
                     )}
@@ -178,13 +178,13 @@ export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalPro
           </div>
 
           {/* Footer Action */}
-          <div className="p-4 px-6 border-t border-white/10 flex items-center justify-between bg-black/30">
+          <div className="p-4 px-6 border-t border-neura-line flex items-center justify-between bg-neura-deep/50">
             <span className="text-xs text-neura-muted">
               {isCompleted ? "✓ Bab ini sudah selesai (+50 XP)" : "Selesaikan materi untuk klaim +50 XP"}
             </span>
             <button
               onClick={handleComplete}
-              className="flex items-center gap-2 px-6 py-2.5 bg-neura-cyan text-neura-deep rounded-2xl text-xs font-bold hover:bg-neura-cyan/90 transition-all shadow-lg shadow-neura-cyan/20"
+              className="flex items-center gap-2 px-6 py-2.5 bg-neura-cyan text-neura-deep rounded-panel text-xs font-bold hover:bg-neura-cyan/90 transition-all"
             >
               <CheckCircle2 className="w-4 h-4" /> {isCompleted ? "Tutup Materi" : "Tandai Selesai & Klaim XP"}
             </button>

@@ -126,7 +126,7 @@ export function LinearRegressionSimulator() {
     <div className="space-y-6">
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Chart View */}
-        <div className="lg:col-span-2 glass p-5 rounded-3xl border border-white/10 flex flex-col justify-between">
+        <div className="lg:col-span-2 glass p-5 rounded-panel border border-neura-line flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-bold font-display text-lg text-white flex items-center gap-2">
@@ -166,24 +166,24 @@ export function LinearRegressionSimulator() {
             </ResponsiveContainer>
           </div>
 
-          <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
+          <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-neura-line">
             <button
               onClick={runGradientDescent}
               disabled={isTraining}
-              className="flex items-center gap-2 px-4 py-2 bg-neura-cyan text-neura-deep rounded-2xl text-xs font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-neura-cyan text-neura-deep rounded-panel text-xs font-bold hover:bg-neura-cyan/90 transition-all disabled:opacity-50"
             >
               <Sparkles className="w-4 h-4" />
               {isTraining ? "Melatih Model..." : "Latih Otomatis (Gradient Descent)"}
             </button>
             <button
               onClick={addNoise}
-              className="flex items-center gap-1.5 px-3 py-2 glass rounded-2xl text-xs text-neura-muted hover:text-white transition-all"
+              className="flex items-center gap-1.5 px-3 py-2 glass rounded-panel text-xs text-neura-muted hover:text-white transition-all"
             >
               <Plus className="w-3.5 h-3.5" /> Tambah Noise
             </button>
             <button
               onClick={resetAll}
-              className="flex items-center gap-1.5 px-3 py-2 glass rounded-2xl text-xs text-neura-muted hover:text-white transition-all ml-auto"
+              className="flex items-center gap-1.5 px-3 py-2 glass rounded-panel text-xs text-neura-muted hover:text-white transition-all ml-auto"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
@@ -191,7 +191,7 @@ export function LinearRegressionSimulator() {
         </div>
 
         {/* Controls Panel */}
-        <div className="glass p-5 rounded-3xl border border-white/10 flex flex-col justify-between">
+        <div className="glass p-5 rounded-panel border border-neura-line flex flex-col justify-between">
           <div>
             <h4 className="font-bold font-display text-base text-white mb-4 flex items-center gap-2">
               <Sliders className="w-4 h-4 text-neura-amber" /> Ubah Parameter
@@ -232,7 +232,7 @@ export function LinearRegressionSimulator() {
             </div>
 
             {/* Explanation box */}
-            <div className="mt-6 p-4 glass rounded-2xl border-l-2 border-neura-cyan text-xs text-neura-muted leading-relaxed">
+            <div className="mt-6 p-4 glass rounded-panel border-l border-neura-cyan text-xs text-neura-muted leading-relaxed">
               <p className="font-medium text-white mb-1">💡 Tips Interaktif:</p>
               Geser slider slope & bias secara manual atau tekan tombol <strong>Latih Otomatis</strong> untuk melihat bagaimana algoritma meminimalkan error garis ke semua titik!
             </div>

@@ -8,10 +8,8 @@ import {
   BookOpen,
   BarChart,
   Award,
-  Clock,
   TrendingUp,
   Sparkles,
-  CheckCircle2,
   ShieldCheck,
   Download,
   X,
@@ -20,7 +18,6 @@ import {
   User as UserIcon,
   LogOut,
   ArrowRight,
-  MessageSquare
 } from "lucide-react"
 import { GlassCard } from "@/components/ui/GlassCard"
 import { Button } from "@/components/ui/Button"
@@ -97,15 +94,16 @@ export default function DashboardPage() {
       <div className="min-h-screen pt-32 pb-24 px-4 flex items-center justify-center relative z-10">
         <div className="w-full max-w-lg">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-            <GlassCard className="p-8 sm:p-10 border border-white/15 text-center shadow-2xl relative overflow-hidden">
-              <div className="w-16 h-16 rounded-3xl bg-neura-amber/20 border border-neura-amber/40 text-neura-amber flex items-center justify-center mx-auto mb-5 shadow-lg shadow-neura-amber/20">
+            <GlassCard className="p-8 sm:p-10 text-center">
+              <div className="w-16 h-16 rounded-panel bg-neura-panel border border-neura-line text-neura-cyan flex items-center justify-center mx-auto mb-5">
                 <Lock className="w-8 h-8 stroke-[2.5]" />
               </div>
               <h1 className="text-2xl sm:text-3xl font-bold font-display text-white mb-3">
                 Akses Terkunci
               </h1>
               <p className="text-xs sm:text-sm text-neura-muted leading-relaxed mb-8 max-w-md mx-auto">
-                Halaman Dashboard dan **Neura AI Assistant** hanya dapat diakses oleh pengguna yang sudah masuk. Silakan buat akun atau masuk untuk menyimpan progress Anda di database.
+                Halaman Dashboard dan Neura AI Assistant hanya dapat diakses oleh pengguna yang sudah masuk.
+                Silakan buat akun atau masuk untuk menyimpan progress Anda di database.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -144,10 +142,10 @@ export default function DashboardPage() {
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header User Profile Banner */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <GlassCard className="relative overflow-hidden border border-white/15 p-6 sm:p-8">
+          <GlassCard className="relative overflow-hidden p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative z-10">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-neura-cyan to-indigo-600 text-neura-deep flex items-center justify-center text-2xl font-bold font-display shadow-xl shadow-neura-cyan/20 border border-white/20">
+                <div className="w-16 h-16 rounded-panel bg-neura-cyan text-neura-deep flex items-center justify-center text-2xl font-bold font-display">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
                 <div>
@@ -158,14 +156,14 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 border-white/10 pt-4 sm:pt-0">
-                <div className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-xs font-bold font-mono text-amber-400">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
+              <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 border-neura-line pt-4 sm:pt-0">
+                <div className="flex items-center gap-2 px-4 py-2 bg-neura-panel border border-neura-line rounded-lg font-mono text-xs font-bold text-neura-cyan">
+                  <Sparkles className="w-4 h-4" />
                   {displayXp} XP
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 px-4 py-2 glass rounded-2xl text-xs font-bold text-red-400 hover:bg-red-500/20 border border-red-500/30 transition-all"
+                  className="flex items-center gap-2 px-4 py-2 bg-neura-panel border border-neura-line rounded-lg text-xs font-bold text-red-400 hover:bg-red-500/10 hover:border-red-500/30 transition-all"
                 >
                   <LogOut className="w-4 h-4" /> Keluar
                 </button>
@@ -175,12 +173,12 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Dashboard Tab Navigation */}
-        <div className="flex gap-2 p-1.5 glass rounded-2xl w-fit max-w-full overflow-x-auto no-scrollbar border border-white/15">
+        <div className="flex gap-1 p-1 bg-neura-panel border border-neura-line rounded-lg w-fit max-w-full overflow-x-auto no-scrollbar">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-medium transition-all shrink-0 ${
               activeTab === "overview"
-                ? "bg-neura-cyan text-neura-deep shadow-lg shadow-neura-cyan/20"
+                ? "bg-neura-cyan text-neura-deep"
                 : "text-neura-muted hover:text-white"
             }`}
           >
@@ -189,9 +187,9 @@ export default function DashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab("ai-chat")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-medium transition-all shrink-0 ${
               activeTab === "ai-chat"
-                ? "bg-neura-cyan text-neura-deep shadow-lg shadow-neura-cyan/20"
+                ? "bg-neura-cyan text-neura-deep"
                 : "text-neura-muted hover:text-white"
             }`}
           >
@@ -200,9 +198,9 @@ export default function DashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab("certificate")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-md text-xs font-medium transition-all shrink-0 ${
               activeTab === "certificate"
-                ? "bg-neura-cyan text-neura-deep shadow-lg shadow-neura-cyan/20"
+                ? "bg-neura-cyan text-neura-deep"
                 : "text-neura-muted hover:text-white"
             }`}
           >
@@ -219,9 +217,9 @@ export default function DashboardPage() {
               <GlassCard className="p-5">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-neura-muted">Total XP</span>
-                  <Sparkles className="w-4 h-4 text-neura-amber" />
+                  <Sparkles className="w-4 h-4 text-neura-cyan" />
                 </div>
-                <div className="text-2xl font-bold font-mono text-neura-amber">{displayXp}</div>
+                <div className="text-2xl font-bold font-mono text-white">{displayXp}</div>
                 <span className="text-[10px] text-neura-muted">Poin Prestasi</span>
               </GlassCard>
 
@@ -230,7 +228,7 @@ export default function DashboardPage() {
                   <span className="text-xs text-neura-muted">Bab Selesai</span>
                   <BookOpen className="w-4 h-4 text-neura-cyan" />
                 </div>
-                <div className="text-2xl font-bold font-mono text-neura-cyan">
+                <div className="text-2xl font-bold font-mono text-white">
                   {completedChaptersCount}/{totalChapters}
                 </div>
                 <span className="text-[10px] text-neura-muted">{progressPercent}% Keseluruhan</span>
@@ -239,18 +237,18 @@ export default function DashboardPage() {
               <GlassCard className="p-5">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-neura-muted">Algoritma Dikuasai</span>
-                  <BarChart className="w-4 h-4 text-green-400" />
+                  <BarChart className="w-4 h-4 text-neura-cyan" />
                 </div>
-                <div className="text-2xl font-bold font-mono text-green-400">{algorithms.length}</div>
+                <div className="text-2xl font-bold font-mono text-white">{algorithms.length}</div>
                 <span className="text-[10px] text-neura-muted">Ensiklopedia ML</span>
               </GlassCard>
 
               <GlassCard className="p-5">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-neura-muted">Lencana Keahlian</span>
-                  <Award className="w-4 h-4 text-purple-400" />
+                  <Award className="w-4 h-4 text-neura-cyan" />
                 </div>
-                <div className="text-2xl font-bold font-mono text-purple-400">{displayBadges.length}</div>
+                <div className="text-2xl font-bold font-mono text-white">{displayBadges.length}</div>
                 <span className="text-[10px] text-neura-muted">Badge Dihasilkan</span>
               </GlassCard>
             </div>
@@ -264,9 +262,9 @@ export default function DashboardPage() {
                 </div>
                 <span className="text-xs font-mono text-neura-cyan font-bold">{progressPercent}% Selesai</span>
               </div>
-              <div className="w-full h-3 bg-black/50 rounded-full overflow-hidden border border-white/10 p-0.5">
+              <div className="w-full h-3 bg-neura-raised border border-neura-line rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-neura-cyan to-indigo-500 rounded-full transition-all duration-500 shadow-sm shadow-neura-cyan/50"
+                  className="h-full bg-neura-cyan rounded-full transition-all duration-500"
                   style={{ width: `${Math.max(5, progressPercent)}%` }}
                 />
               </div>
@@ -275,15 +273,15 @@ export default function DashboardPage() {
             {/* Badges List */}
             <GlassCard className="p-6">
               <h3 className="font-bold text-sm text-white mb-4 flex items-center gap-2">
-                <Award className="w-5 h-5 text-purple-400" /> Lencana Pencapaian
+                <Award className="w-5 h-5 text-neura-cyan" /> Lencana Pencapaian
               </h3>
               <div className="flex flex-wrap gap-3">
                 {displayBadges.map((badge, bIdx) => (
                   <div
                     key={bIdx}
-                    className="flex items-center gap-2 px-4 py-2 glass rounded-2xl border border-purple-500/30 bg-purple-500/10 text-purple-300 text-xs font-bold"
+                    className="flex items-center gap-2 px-4 py-2 bg-neura-panel border border-neura-line rounded-lg text-neura-text text-xs font-bold"
                   >
-                    <ShieldCheck className="w-4 h-4 text-purple-400" />
+                    <ShieldCheck className="w-4 h-4 text-neura-cyan" />
                     {badge}
                   </div>
                 ))}
@@ -304,31 +302,31 @@ export default function DashboardPage() {
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
             {completedChaptersCount >= totalChapters ? (
               <GlassCard className="p-8 text-center space-y-6">
-                <div className="w-16 h-16 rounded-3xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/20">
+                <div className="w-16 h-16 rounded-panel bg-neura-panel border border-neura-line text-neura-cyan flex items-center justify-center mx-auto">
                   <Award className="w-8 h-8" />
                 </div>
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full text-xs font-bold mb-2">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-neura-panel border border-neura-line rounded-full text-xs font-bold text-neura-cyan mb-2">
                     <ShieldCheck className="w-3.5 h-3.5" /> Seluruh Bab Selesai ({completedChaptersCount}/{totalChapters})
                   </div>
                   <h3 className="text-xl font-bold font-display text-white mb-2">Sertifikat Kelulusan Neura ML</h3>
                   <p className="text-xs text-neura-muted max-w-md mx-auto leading-relaxed">
-                    Selamat! Anda telah menyelesaikan seluruh kurikulum Machine Learning Neura atas nama **{user.name}**.
+                    Selamat! Anda telah menyelesaikan seluruh kurikulum Machine Learning Neura atas nama {user.name}.
                   </p>
                 </div>
 
-                <div className="p-6 glass rounded-3xl border border-amber-500/30 max-w-xl mx-auto bg-black/40 text-left space-y-4">
-                  <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                <div className="p-6 bg-neura-panel border border-neura-line rounded-panel max-w-xl mx-auto text-left space-y-4">
+                  <div className="flex justify-between items-center border-b border-neura-line pb-4">
                     <span className="text-xs text-neura-muted">Penerima Sertifikat</span>
                     <span className="text-sm font-bold text-white font-display">{user.name}</span>
                   </div>
-                  <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                  <div className="flex justify-between items-center border-b border-neura-line pb-4">
                     <span className="text-xs text-neura-muted">Program</span>
                     <span className="text-xs font-bold text-neura-cyan">Neura Machine Learning Specialist</span>
                   </div>
-                  <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                  <div className="flex justify-between items-center border-b border-neura-line pb-4">
                     <span className="text-xs text-neura-muted">Total XP yang Didapat</span>
-                    <span className="text-xs font-mono font-bold text-amber-400">{displayXp} XP</span>
+                    <span className="text-xs font-mono font-bold text-neura-cyan">{displayXp} XP</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-xs text-neura-muted">ID Verifikasi MongoDB</span>
@@ -339,37 +337,38 @@ export default function DashboardPage() {
                 <button
                   onClick={() => {
                     setShowCertModal(true)
-                    notify("Prinjinjauan Sertifikat", "Menampilkan sertifikat cetak untuk " + user.name, "info")
+                    notify("Pratinjau Sertifikat", "Menampilkan sertifikat cetak untuk " + user.name, "info")
                   }}
-                  className="px-6 py-3 bg-neura-cyan text-neura-deep font-bold rounded-2xl text-xs hover:bg-neura-cyan/90 transition-all inline-flex items-center gap-2 shadow-lg shadow-neura-cyan/20"
+                  className="px-6 py-3 bg-neura-cyan text-neura-deep font-bold rounded-panel text-xs hover:bg-neura-cyan/90 transition-all inline-flex items-center gap-2"
                 >
                   <Download className="w-4 h-4" /> Lihat & Unduh Sertifikat
                 </button>
               </GlassCard>
             ) : (
               <GlassCard className="p-8 text-center space-y-6">
-                <div className="w-16 h-16 rounded-3xl bg-white/5 border border-white/15 text-neura-muted flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 rounded-panel bg-neura-panel border border-neura-line text-neura-muted flex items-center justify-center mx-auto">
                   <Lock className="w-8 h-8 stroke-[2]" />
                 </div>
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-full text-xs font-bold mb-2">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-neura-panel border border-neura-line rounded-full text-xs font-bold text-neura-muted mb-2">
                     <Lock className="w-3.5 h-3.5" /> Akses Terkunci ({completedChaptersCount}/{totalChapters} Bab)
                   </div>
                   <h3 className="text-xl font-bold font-display text-white mb-2">Sertifikat Belum Tersedia</h3>
                   <p className="text-xs text-neura-muted max-w-md mx-auto leading-relaxed">
-                    Sertifikat kelulusan hanya dapat diunduh setelah menyelesaikan seluruh bab kurikulum. Selesaikan **{totalChapters - completedChaptersCount} bab lagi** untuk membuka sertifikat ini!
+                    Sertifikat kelulusan hanya dapat diunduh setelah menyelesaikan seluruh bab kurikulum.
+                    Selesaikan {totalChapters - completedChaptersCount} bab lagi untuk membuka sertifikat ini!
                   </p>
                 </div>
 
                 {/* Progress bar info */}
-                <div className="p-6 glass rounded-3xl border border-white/10 max-w-xl mx-auto bg-black/40 text-left space-y-3">
+                <div className="p-6 bg-neura-panel border border-neura-line rounded-panel max-w-xl mx-auto text-left space-y-3">
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-neura-muted">Kemajuan Kurikulum</span>
                     <span className="font-mono text-neura-cyan font-bold">{completedChaptersCount} dari {totalChapters} Bab ({progressPercent}%)</span>
                   </div>
-                  <div className="w-full h-2.5 bg-black/60 rounded-full overflow-hidden border border-white/10 p-0.5">
+                  <div className="w-full h-2.5 bg-neura-raised border border-neura-line rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-neura-cyan to-indigo-500 rounded-full transition-all duration-500"
+                      className="h-full bg-neura-cyan rounded-full transition-all duration-500"
                       style={{ width: `${Math.max(5, progressPercent)}%` }}
                     />
                   </div>
@@ -389,22 +388,22 @@ export default function DashboardPage() {
       {/* Modal Preview Sertifikat */}
       <AnimatePresence>
         {showCertModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neura-deep/90 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-3xl glass-strong rounded-3xl p-8 border border-amber-500/40 relative bg-[#090E1A] shadow-2xl text-center space-y-6"
+              className="w-full max-w-3xl bg-neura-deep rounded-panel p-8 border border-neura-line relative text-center space-y-6"
             >
               <button
                 onClick={() => setShowCertModal(false)}
-                className="absolute top-4 right-4 p-2 glass rounded-xl text-neura-muted hover:text-white transition-all"
+                className="absolute top-4 right-4 p-2 bg-neura-panel border border-neura-line rounded-lg text-neura-muted hover:text-white transition-all"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="border-4 border-double border-amber-500/50 p-8 rounded-2xl bg-gradient-to-b from-amber-500/5 to-transparent space-y-6">
-                <div className="flex items-center justify-center gap-2 text-amber-400">
+              <div className="border-2 border-double border-neura-cyan/40 p-8 rounded-panel space-y-6">
+                <div className="flex items-center justify-center gap-2 text-neura-cyan">
                   <Award className="w-8 h-8" />
                   <span className="text-xl font-bold font-display uppercase tracking-widest">Sertifikat Kelulusan</span>
                 </div>
@@ -413,10 +412,11 @@ export default function DashboardPage() {
                   {user.name}
                 </h2>
                 <p className="text-xs text-neura-muted max-w-lg mx-auto leading-relaxed">
-                  Telah berhasil menyelesaikan seluruh kurikulum **Neura Machine Learning Academy**, menguasai 8 algoritma utama, studi kasus IoT, dan memperoleh total **{displayXp} XP**.
+                  Telah berhasil menyelesaikan seluruh kurikulum Neura Machine Learning Academy, menguasai 8
+                  algoritma utama, studi kasus IoT, dan memperoleh total {displayXp} XP.
                 </p>
 
-                <div className="pt-6 border-t border-white/10 flex justify-between items-end text-xs text-neura-muted">
+                <div className="pt-6 border-t border-neura-line flex justify-between items-end text-xs text-neura-muted">
                   <div className="text-left font-mono text-[10px]">
                     ID: NEURA-{user.id.slice(-6).toUpperCase()}<br />
                     Database: MongoDB Verified
