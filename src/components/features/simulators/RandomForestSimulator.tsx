@@ -105,7 +105,9 @@ export function RandomForestSimulator() {
       },
     ]
 
-    return allTrees.slice(0, numTrees)
+    // Rotate/offset allTrees with treeSeeds so re-seeding generates diverse tree ensembles
+    const rotated = [...allTrees.slice(treeSeeds % allTrees.length), ...allTrees.slice(0, treeSeeds % allTrees.length)]
+    return rotated.slice(0, numTrees)
   }, [numTrees, treeSeeds])
 
   // Run simulation & aggregate votes

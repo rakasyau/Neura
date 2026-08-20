@@ -63,7 +63,8 @@ export default function KuisPage() {
       const finalScore = questions.filter((q) => answers[q.id] === q.correctIndex).length
       recordQuizScore(activeModule, finalScore, questions.length)
     }
-  }, [showResults])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showResults, activeModule])
 
   const switchModule = (id: string) => {
     setActiveModule(id)

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, BookOpen, CheckCircle2, Sparkles, HelpCircle, ArrowRight } from "lucide-react"
 import { chapterLessons, LessonContent } from "@/lib/chapterData"
@@ -15,13 +15,11 @@ interface ChapterReaderModalProps {
 export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalProps) {
   const { stats, markChapterComplete } = useUserStats()
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({})
-  const [prevChapterId, setPrevChapterId] = useState<string | null>(null)
 
   // Reset quiz state when chapter changes
-  if (chapterId !== prevChapterId) {
-    setPrevChapterId(chapterId)
+  useEffect(() => {
     setQuizAnswers({})
-  }
+  }, [chapterId])
 
   if (!chapterId) return null
 
@@ -70,12 +68,13 @@ export function ChapterReaderModal({ chapterId, onClose }: ChapterReaderModalPro
 
   return (
     <AnimatePresence>
-      <div role="dialog" aria-modal="true" aria-label="Isi bab pembelajaran" className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-neura-deep/85 backdrop-blur-md">
+      <div role="dialog" aria-modal="true" aria-label="Isi bab pembelajaran" className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-neura-deep/85 backdrop-blur-md" onClick={onClose}>
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           className="w-full max-w-3xl max-h-[92vh] sm:max-h-[85vh] h-full glass-strong rounded-panel border border-neura-line shadow-2xl flex flex-col overflow-hidden bg-neura-deep/95"
+          onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-neura-line">

@@ -3,11 +3,12 @@ import { cookies } from "next/headers"
 
 function getJwtSecret(): string {
   const secret = process.env.JWT_SECRET
-  if (!secret) {
-    if (process.env.NODE_ENV === "production") {
-      throw new Error("JWT_SECRET tidak ditemukan. Atur di Vercel Environment Variables.")
-    }
-    return "neura-fallback-secret-key-2026"
+  if (!secret || secret.length < 32) {
+    throw new Error(
+      "JWT_SECRET tidak ditemukan atau terlalu pendek (min 32 karakter). " +
+      "Generate dengan: node -e \"console.log(require('crypto').randomBytes(64).toString('hex'))\" " +
+      "lalu atur di .env.local atau Vercel Environment Variables."
+    )
   }
   return secret
 }

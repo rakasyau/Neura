@@ -38,6 +38,35 @@ export async function POST(req: Request) {
       )
     }
 
+    // Validate message limits
+    const MAX_MESSAGES = 20
+    const MAX_CONTENT_LENGTH = 4000
+
+    if (messages.length > MAX_MESSAGES) {
+      return NextResponse.json(
+        { error: `Maksimal ${MAX_MESSAGES} pesan per percakapan. Silakan reset chat.` },
+        { status: 400 }
+      )
+    }
+
+    for (const m of messages) {
+      if (!m || typeof m.role !== "string" || typeof m.content !== "string") {
+        return NextResponse.json(
+          { error: "Setiap pesan harus memiliki 'role' dan 'content' yang valid." },
+          { status: 400 }
+        )
+      }
+      if (m.content.length > MAX_CONTENT_LENGTH) {
+        return NextResponse.json(
+          { error: `Panjang pesan maksimal ${MAX_CONTENT_LENGTH} karakter.` },
+          { status: 400 }
+        )
+      }
+    }
+
+    // Sanitize: strip HTML/script tags from content
+    const sanitize = (text: string) => text.replace(/<[^>]*>/g, "")
+
     // System instruction for Neura AI Assistant
     const systemInstruction = `Kamu adalah Neura AI Assistant, pakar Machine Learning dan kecerdasan buatan dari platform edukasi Neura.
 Tugas utama kamu adalah membantu ${sessionUser.name} belajar Machine Learning, menjelaskan algoritma (Supervised, Unsupervised, Reinforcement Learning, Neural Networks, dll), membantu debugging kode Python (Scikit-Learn, Pandas, NumPy, PyTorch, TensorFlow), serta menjawab pertanyaan seputar ilmu data dalam Bahasa Indonesia yang ramah, jelas, terstruktur, dan edukatif.
@@ -53,7 +82,7 @@ PENTING UNTUK FORMAT JAWABAN:
     // Format chat history for Gemini API
     const contents = messages.map((m: { role: string; content: string }) => ({
       role: m.role === "user" ? "user" : "model",
-      parts: [{ text: m.content }],
+      parts: [{ text: sanitize(m.content) }],
     }))
 
     // Primary & Fallback Models (Gemini 2.5 Flash -> Gemini 2.0 Flash -> Gemini 1.5 Pro)

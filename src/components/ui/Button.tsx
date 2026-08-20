@@ -1,14 +1,13 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
+import { motion, HTMLMotionProps } from "framer-motion"
 import { Loader2 } from "lucide-react"
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost" | "outline"
   size?: "sm" | "md" | "lg"
   loading?: boolean
-  href?: string
 }
 
 export function Button({
@@ -42,7 +41,7 @@ export function Button({
       whileTap={{ scale: 0.98 }}
       className={cn(base, variants[variant], sizes[size], loading && "opacity-70", className)}
       disabled={disabled || loading}
-      {...(props as any)}
+      {...(props as HTMLMotionProps<"button">)}
     >
       {loading && <Loader2 className="w-4 h-4 animate-spin" />}
       {children}

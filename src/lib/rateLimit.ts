@@ -9,6 +9,15 @@ export function checkRateLimit(
   windowMs = DEFAULT_WINDOW_MS
 ): { allowed: boolean; remaining: number } {
   const now = Date.now()
+
+  // Lazy cleanup: remove expired entries on each call instead of using setInterval
+  // This prevents memory leaks in dev servers and is serverless-friendly
+  if (rateMap.size > 100) {
+    rateMap.forEach((entry, k) => {
+      if (now > entry.resetAt) rateMap.delete(k)
+    })
+  }
+
   const entry = rateMap.get(key)
 
   if (!entry || now > entry.resetAt) {
@@ -23,10 +32,3 @@ export function checkRateLimit(
   entry.count++
   return { allowed: true, remaining: maxRequests - entry.count }
 }
-
-setInterval(() => {
-  const now = Date.now()
-  rateMap.forEach((entry, key) => {
-    if (now > entry.resetAt) rateMap.delete(key)
-  })
-}, 60 * 1000)

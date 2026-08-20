@@ -84,7 +84,6 @@ async function loadFromServer(): Promise<UserStats | null> {
 
 export function useUserStats() {
   const [stats, setStats] = useState<UserStats>(defaultStats)
-  const [syncing, setSyncing] = useState(false)
 
   useEffect(() => {
     async function init() {
@@ -147,5 +146,5 @@ export function useUserStats() {
     syncToServer(updated)
   }
 
-  return { stats, syncing, markChapterComplete, recordQuizScore }
+  return { stats, markChapterComplete, recordQuizScore }
 }

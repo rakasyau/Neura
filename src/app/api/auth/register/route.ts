@@ -5,6 +5,8 @@ import { User } from "@/models/User"
 import { signToken, setSessionCookie } from "@/lib/auth"
 import { checkRateLimit } from "@/lib/rateLimit"
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export async function POST(req: Request) {
   try {
     const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown"
@@ -28,6 +30,13 @@ export async function POST(req: Request) {
     if (password.length < 6) {
       return NextResponse.json(
         { error: "Password minimal 6 karakter" },
+        { status: 400 }
+      )
+    }
+
+    if (typeof email !== "string" || !EMAIL_REGEX.test(email)) {
+      return NextResponse.json(
+        { error: "Format email tidak valid" },
         { status: 400 }
       )
     }

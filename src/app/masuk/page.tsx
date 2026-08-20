@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect, useRef, Suspense } from "react"
+import { useState, useEffect, useRef, useCallback, Suspense } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
-import { Brain, User, Lock, ArrowRight, AlertCircle } from "lucide-react"
+import { Brain, User, Mail, Lock, ArrowRight, AlertCircle } from "lucide-react"
 import { GlassCard } from "@/components/ui/GlassCard"
 import { notify } from "@/components/ui/Toast"
 
@@ -42,44 +42,7 @@ function MasukForm() {
   const googleButtonRef = useRef<HTMLDivElement>(null)
   const gisLoadedRef = useRef(false)
 
-  useEffect(() => {
-    if (googleButtonRef.current && !gisLoadedRef.current) {
-      const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
-      if (!clientId) return
-
-      if (window.google?.accounts) {
-        gisLoadedRef.current = true
-        renderGoogleButton(clientId)
-        return
-      }
-
-      const script = document.createElement("script")
-      script.src = "https://accounts.google.com/gsi/client"
-      script.async = true
-      script.defer = true
-      script.onload = () => {
-        gisLoadedRef.current = true
-        renderGoogleButton(clientId)
-      }
-      document.body.appendChild(script)
-    }
-  }, [])
-
-  function renderGoogleButton(clientId: string) {
-    if (!window.google?.accounts || !googleButtonRef.current) return
-    window.google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleGoogleCredential,
-    })
-    window.google.accounts.id.renderButton(googleButtonRef.current, {
-      theme: "outline",
-      size: "large",
-      text: "signin_with",
-      width: googleButtonRef.current.offsetWidth || 320,
-    })
-  }
-
-  const handleGoogleCredential = async (response: { credential: string }) => {
+  const handleGoogleCredential = useCallback(async (response: { credential: string }) => {
     setGoogleLoading(true)
     setErrorMsg("")
 
@@ -105,7 +68,44 @@ function MasukForm() {
     } finally {
       setGoogleLoading(false)
     }
-  }
+  }, [redirectTarget, router])
+
+  const renderGoogleButton = useCallback((clientId: string) => {
+    if (!window.google?.accounts || !googleButtonRef.current) return
+    window.google.accounts.id.initialize({
+      client_id: clientId,
+      callback: handleGoogleCredential,
+    })
+    window.google.accounts.id.renderButton(googleButtonRef.current, {
+      theme: "outline",
+      size: "large",
+      text: "signin_with",
+      width: googleButtonRef.current.offsetWidth || 320,
+    })
+  }, [handleGoogleCredential])
+
+  useEffect(() => {
+    if (googleButtonRef.current && !gisLoadedRef.current) {
+      const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+      if (!clientId) return
+
+      if (window.google?.accounts) {
+        gisLoadedRef.current = true
+        renderGoogleButton(clientId)
+        return
+      }
+
+      const script = document.createElement("script")
+      script.src = "https://accounts.google.com/gsi/client"
+      script.async = true
+      script.defer = true
+      script.onload = () => {
+        gisLoadedRef.current = true
+        renderGoogleButton(clientId)
+      }
+      document.body.appendChild(script)
+    }
+  }, [renderGoogleButton])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -181,32 +181,32 @@ function MasukForm() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider mb-2">Email</label>
-            <div className="relative">
-              <User className="w-4 h-4 text-neura-muted absolute left-4 top-3.5" />
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider">Email</label>
+            <div className="relative flex items-center">
+              <Mail className="w-4 h-4 text-neura-muted absolute left-3.5 pointer-events-none" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="nama@email.com"
                 required
-                className="glass-input pl-11 text-xs sm:text-sm"
+                className="glass-input pl-10 text-sm"
               />
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider mb-2">Password</label>
-            <div className="relative">
-              <Lock className="w-4 h-4 text-neura-muted absolute left-4 top-3.5" />
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider">Password</label>
+            <div className="relative flex items-center">
+              <Lock className="w-4 h-4 text-neura-muted absolute left-3.5 pointer-events-none" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="glass-input pl-11 text-xs sm:text-sm"
+                className="glass-input pl-10 text-sm"
               />
             </div>
           </div>
@@ -214,7 +214,7 @@ function MasukForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 mt-2 bg-neura-cyan text-neura-deep font-bold rounded-panel text-xs sm:text-sm hover:bg-neura-cyan/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full h-12 mt-2 bg-neura-cyan text-neura-deep font-bold rounded-panel text-sm hover:bg-neura-cyan/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-md cursor-pointer"
           >
             {loading ? "Memproses..." : "Masuk ke Akun"}
             <ArrowRight className="w-4 h-4" />

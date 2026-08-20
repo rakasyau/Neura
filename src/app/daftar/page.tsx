@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, Suspense } from "react"
+import { useState, useEffect, useRef, useCallback, Suspense } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
@@ -43,44 +43,7 @@ function DaftarForm() {
   const googleButtonRef = useRef<HTMLDivElement>(null)
   const gisLoadedRef = useRef(false)
 
-  useEffect(() => {
-    if (googleButtonRef.current && !gisLoadedRef.current) {
-      const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
-      if (!clientId) return
-
-      if (window.google?.accounts) {
-        gisLoadedRef.current = true
-        renderGoogleButton(clientId)
-        return
-      }
-
-      const script = document.createElement("script")
-      script.src = "https://accounts.google.com/gsi/client"
-      script.async = true
-      script.defer = true
-      script.onload = () => {
-        gisLoadedRef.current = true
-        renderGoogleButton(clientId)
-      }
-      document.body.appendChild(script)
-    }
-  }, [])
-
-  function renderGoogleButton(clientId: string) {
-    if (!window.google?.accounts || !googleButtonRef.current) return
-    window.google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleGoogleCredential,
-    })
-    window.google.accounts.id.renderButton(googleButtonRef.current, {
-      theme: "outline",
-      size: "large",
-      text: "signup_with",
-      width: googleButtonRef.current.offsetWidth || 320,
-    })
-  }
-
-  const handleGoogleCredential = async (response: { credential: string }) => {
+  const handleGoogleCredential = useCallback(async (response: { credential: string }) => {
     setGoogleLoading(true)
     setErrorMsg("")
 
@@ -106,7 +69,44 @@ function DaftarForm() {
     } finally {
       setGoogleLoading(false)
     }
-  }
+  }, [redirectTarget, router])
+
+  const renderGoogleButton = useCallback((clientId: string) => {
+    if (!window.google?.accounts || !googleButtonRef.current) return
+    window.google.accounts.id.initialize({
+      client_id: clientId,
+      callback: handleGoogleCredential,
+    })
+    window.google.accounts.id.renderButton(googleButtonRef.current, {
+      theme: "outline",
+      size: "large",
+      text: "signup_with",
+      width: googleButtonRef.current.offsetWidth || 320,
+    })
+  }, [handleGoogleCredential])
+
+  useEffect(() => {
+    if (googleButtonRef.current && !gisLoadedRef.current) {
+      const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+      if (!clientId) return
+
+      if (window.google?.accounts) {
+        gisLoadedRef.current = true
+        renderGoogleButton(clientId)
+        return
+      }
+
+      const script = document.createElement("script")
+      script.src = "https://accounts.google.com/gsi/client"
+      script.async = true
+      script.defer = true
+      script.onload = () => {
+        gisLoadedRef.current = true
+        renderGoogleButton(clientId)
+      }
+      document.body.appendChild(script)
+    }
+  }, [renderGoogleButton])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -182,28 +182,28 @@ function DaftarForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider mb-2">Nama Lengkap</label>
-            <div className="relative">
-              <User className="w-4 h-4 text-neura-muted absolute left-4 top-3.5" />
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama Anda" required className="glass-input pl-11 text-xs sm:text-sm" />
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider">Nama Lengkap</label>
+            <div className="relative flex items-center">
+              <User className="w-4 h-4 text-neura-muted absolute left-3.5 pointer-events-none" />
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama Lengkap Anda" required className="glass-input pl-10 text-sm" />
             </div>
           </div>
-          <div>
-            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider mb-2">Email</label>
-            <div className="relative">
-              <Mail className="w-4 h-4 text-neura-muted absolute left-4 top-3.5" />
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="nama@email.com" required className="glass-input pl-11 text-xs sm:text-sm" />
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider">Email</label>
+            <div className="relative flex items-center">
+              <Mail className="w-4 h-4 text-neura-muted absolute left-3.5 pointer-events-none" />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="nama@email.com" required className="glass-input pl-10 text-sm" />
             </div>
           </div>
-          <div>
-            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider mb-2">Password</label>
-            <div className="relative">
-              <Lock className="w-4 h-4 text-neura-muted absolute left-4 top-3.5" />
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimal 6 karakter" required minLength={6} className="glass-input pl-11 text-xs sm:text-sm" />
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-neura-muted uppercase tracking-wider">Password</label>
+            <div className="relative flex items-center">
+              <Lock className="w-4 h-4 text-neura-muted absolute left-3.5 pointer-events-none" />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Minimal 6 karakter" required minLength={6} className="glass-input pl-10 text-sm" />
             </div>
           </div>
-          <button type="submit" disabled={loading} className="w-full py-3.5 mt-2 bg-neura-cyan text-neura-deep font-bold rounded-panel text-xs sm:text-sm hover:bg-neura-cyan/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50">
+          <button type="submit" disabled={loading} className="w-full h-12 mt-2 bg-neura-cyan text-neura-deep font-bold rounded-panel text-sm hover:bg-neura-cyan/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-md cursor-pointer">
             {loading ? "Mendaftarkan..." : "Daftar Akun Baru"}
             <ArrowRight className="w-4 h-4" />
           </button>

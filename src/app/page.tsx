@@ -32,6 +32,7 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-start">
           <div className="max-w-prose">
             <motion.div
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="text-neura-cyan"
@@ -39,6 +40,7 @@ export default function HomePage() {
               Platform Belajar ML Interaktif
             </motion.div>
             <motion.h1
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
               className="mt-5 text-4xl md:text-6xl font-bold font-display tracking-tight leading-[1.05] text-balance"
@@ -47,6 +49,7 @@ export default function HomePage() {
               <span className="text-neura-cyan">secara Visual</span>
             </motion.h1>
             <motion.p
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               className="mt-6 text-lg text-neura-muted max-w-[52ch] leading-relaxed"
@@ -55,6 +58,7 @@ export default function HomePage() {
               interaktif — semuanya tanpa instalasi, dalam Bahasa Indonesia.
             </motion.p>
             <motion.div
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.45 }}
               className="mt-10 flex flex-col sm:flex-row gap-4"
@@ -72,18 +76,19 @@ export default function HomePage() {
               </Link>
             </motion.div>
             <motion.div
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
-              className="mt-14 flex items-center gap-0 divide-x divide-neura-line border-y border-neura-line"
+              className="mt-12 flex flex-wrap sm:flex-nowrap items-stretch bg-neura-panel border border-neura-line rounded-xl divide-y sm:divide-y-0 sm:divide-x divide-neura-line shadow-lg"
             >
               {[
                 { value: `${modules.length}`, label: "Modul Lengkap" },
-                { value: "8", label: "Algoritma" },
-                { value: "100%", label: "Gratis" },
+                { value: `${algorithms.length}`, label: "Algoritma" },
+                { value: "100%", label: "Gratis Akses" },
               ].map((stat) => (
-                <div key={stat.label} className="py-5 pr-10 pl-0 first:pl-0 last:pr-0">
-                  <div className="text-2xl md:text-3xl font-bold font-display text-white">{stat.value}</div>
-                  <div className="text-xs text-neura-muted mt-1">{stat.label}</div>
+                <div key={stat.label} className="flex-1 px-5 sm:px-6 py-4 text-left">
+                  <div className="text-2xl sm:text-3xl font-bold font-display text-white tracking-tight">{stat.value}</div>
+                  <div className="text-xs text-neura-muted mt-1 font-medium whitespace-nowrap">{stat.label}</div>
                 </div>
               ))}
             </motion.div>
@@ -91,6 +96,7 @@ export default function HomePage() {
 
           {/* Indeks kurikulum bernomor — daftar editorial dengan hairline */}
           <motion.aside
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
             className="border border-neura-line rounded-panel bg-neura-panel/60"

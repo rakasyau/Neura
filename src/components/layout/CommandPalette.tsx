@@ -54,12 +54,13 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
 
   return (
     <AnimatePresence>
-      <div role="dialog" aria-modal="true" aria-label="Pencarian perintah" className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-neura-deep/60 backdrop-blur-md">
+      <div role="dialog" aria-modal="true" aria-label="Pencarian perintah" className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-neura-deep/60 backdrop-blur-md" onClick={onClose}>
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -10 }}
           className="w-full max-w-2xl glass-strong rounded-panel border border-neura-line shadow-2xl overflow-hidden bg-neura-deep/95"
+          onClick={(e) => e.stopPropagation()}
         >
           {/* Input Box */}
           <div className="flex items-center px-5 py-4 border-b border-neura-line gap-3">

@@ -8,27 +8,22 @@ const config: Config = {
       colors: {
         neura: {
           deep: "#060913",
-          aurora1: "#0F172A",
-          aurora2: "#1E1B4B",
+          panel: "#0B111E",
+          raised: "#101A2B",
           cyan: "#5EEAD4",
           amber: "#F5A265",
-          glass: "rgba(15, 23, 42, 0.85)",
-          glassBorder: "rgba(255, 255, 255, 0.12)",
           text: "#F8FAFC",
-          muted: "#CBD5E1",
+          muted: "#94A3B8",
+          line: "rgba(255, 255, 255, 0.08)",
         },
       },
       fontFamily: {
-        display: ["Space Grotesk", "sans-serif"],
-        body: ["Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-      },
-      backdropBlur: {
-        glass: "20px",
+        display: ["var(--font-display)", "sans-serif"],
+        body: ["var(--font-display)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
       },
       borderRadius: {
-        glass: "32px",
-        "glass-sm": "16px",
+        panel: "10px",
       },
       animation: {
         shimmer: "shimmer 2s ease-in-out infinite",

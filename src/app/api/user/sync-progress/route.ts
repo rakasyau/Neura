@@ -2,6 +2,13 @@ import { NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/db"
 import { User, IUser } from "@/models/User"
 import { getSessionUser } from "@/lib/auth"
+import { modules } from "@/lib/data"
+
+// Pre-compute valid chapter IDs for validation
+const VALID_CHAPTER_IDS = new Set(
+  modules.flatMap((m) => m.chapters.map((c) => c.id))
+)
+const MAX_XP = 50000
 
 export async function POST(req: Request) {
   try {
@@ -14,10 +21,39 @@ export async function POST(req: Request) {
 
     await connectToDatabase()
 
+    // Fetch current user data for comparison
+    const currentUser = await User.findById(sessionUser.userId).select("xp completedChapters completedQuizzes")
+    if (!currentUser) {
+      return NextResponse.json({ error: "User tidak ditemukan" }, { status: 404 })
+    }
+
     const updateFields: Record<string, unknown> = {}
-    if (typeof xp === "number") updateFields.xp = xp
-    if (Array.isArray(completedChapters)) updateFields.completedChapters = completedChapters
-    if (completedQuizzes && typeof completedQuizzes === "object") updateFields.completedQuizzes = completedQuizzes
+
+    // XP: only allow increase, cap at MAX_XP
+    if (typeof xp === "number" && xp >= 0) {
+      updateFields.xp = Math.min(MAX_XP, Math.max(currentUser.xp || 0, Math.round(xp)))
+    }
+
+    // completedChapters: validate each ID against known chapters
+    if (Array.isArray(completedChapters)) {
+      const validChapters = completedChapters.filter(
+        (id): id is string => typeof id === "string" && VALID_CHAPTER_IDS.has(id)
+      )
+      // Merge with existing, don't allow removal
+      const merged = Array.from(new Set([...(currentUser.completedChapters || []), ...validChapters]))
+      updateFields.completedChapters = merged
+    }
+
+    // completedQuizzes: validate values are percentages (0-100)
+    if (completedQuizzes && typeof completedQuizzes === "object" && !Array.isArray(completedQuizzes)) {
+      const sanitized: Record<string, number> = {}
+      for (const [key, value] of Object.entries(completedQuizzes)) {
+        if (typeof key === "string" && typeof value === "number" && value >= 0 && value <= 100) {
+          sanitized[key] = Math.round(value)
+        }
+      }
+      updateFields.completedQuizzes = sanitized
+    }
 
     const updated = await User.findByIdAndUpdate(
       sessionUser.userId,

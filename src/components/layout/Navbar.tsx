@@ -62,7 +62,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="pill-nav max-w-6xl w-[calc(100%-32px)] h-14 px-3 sm:px-4 flex items-center justify-between">
+      <nav className="pill-nav max-w-6xl mx-auto w-[calc(100%-32px)] h-14 px-3 sm:px-4 flex items-center justify-between">
         {/* Left Side: Brand Logo */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2.5 px-1 py-1 rounded-full hover:opacity-90 transition-opacity">
