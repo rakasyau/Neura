@@ -4,10 +4,18 @@
 
 @layer base {
   * {
-    @apply border-white/10;
+    border-color: rgba(255, 255, 255, 0.1);
   }
   body {
-    @apply bg-neura-deep text-neura-text font-body antialiased selection:bg-neura-cyan/30 selection:text-neura-deep;
+    background-color: #060913;
+    color: #F8FAFC;
+    font-family: var(--font-display), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background-color: rgba(94, 234, 212, 0.3);
+    color: #060913;
   }
 }
 
@@ -16,41 +24,65 @@
   .glass,
   .glass-strong,
   .glass-card {
-    @apply bg-neura-panel border border-neura-line;
+    background-color: #0B111E;
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
   .glass-strong {
-    @apply bg-neura-deep;
+    background-color: #060913;
   }
   .glass-card {
-    @apply rounded-panel;
+    border-radius: 10px;
   }
   .glass-hover {
-    @apply transition-all duration-200;
+    transition: all 0.2s ease;
   }
   .glass-hover:hover {
-    @apply bg-neura-raised border-neura-cyan/40 -translate-y-0.5;
+    background-color: #101A2B;
+    border-color: rgba(94, 234, 212, 0.4);
+    transform: translateY(-0.125rem);
   }
   .glass-input {
-    @apply bg-[#0A0F1C] border border-neura-line rounded-lg px-4 py-2.5 text-white placeholder-neura-muted/60
-           focus:outline-none focus:border-neura-cyan focus:ring-1 focus:ring-neura-cyan/40 transition-all;
+    background-color: #0A0F1C;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.5rem;
+    padding: 0.625rem 1rem;
+    color: #fff;
+    placeholder-color: rgba(148, 163, 184, 0.6);
+    outline: none;
+    transition: all 0.2s ease;
+  }
+  .glass-input:focus {
+    border-color: #5EEAD4;
+    box-shadow: 0 0 0 1px rgba(94, 234, 212, 0.4);
   }
   .gradient-text {
-    @apply text-neura-cyan;
+    color: #5EEAD4;
   }
   .gradient-aurora {
-    background: #060913;
+    background-color: #060913;
   }
   .node-bg {
     background-image: none;
   }
   .pill-nav {
-    @apply fixed top-0 left-0 right-0 z-50 bg-neura-deep/95 backdrop-blur-md border-b border-neura-line;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background-color: rgba(6, 9, 19, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
   .mono-label {
-    @apply font-mono text-[11px] uppercase tracking-[0.22em] text-neura-muted;
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #94A3B8;
   }
   .hairline-t {
-    @apply border-t border-neura-line;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
   .scroll-reveal {
     opacity: 0;
@@ -100,8 +132,9 @@ html {
   background: #060913;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-white/20 rounded-full;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-white/40;
+  background: rgba(255, 255, 255, 0.4);
 }
